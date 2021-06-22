@@ -1,0 +1,39 @@
+<pnp:TermGroups xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
+  <pnp:TermGroup Name="LiveTiles" ID="467cf726-dd98-411b-a88e-2d4965fbe3b5" Description="" UpdateBehavior="Overwrite">
+    <pnp:TermSets>
+      <pnp:TermSet Name="Topic" ID="5e683c91-de0a-4e4f-ae5e-4c9738a2e3dc" Description="">
+        <pnp:Terms>
+          <pnp:Term Name="eBook" ID="e1698d39-f90d-4317-8763-ce6d2f48c4e7" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="e1698d39-f90d-4317-8763-ce6d2f48c4e7">
+            <pnp:Terms />
+          </pnp:Term>
+          <pnp:Term Name="Guide" ID="3d369edd-c195-4396-8655-c44f41f65ff4" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="3d369edd-c195-4396-8655-c44f41f65ff4">
+            <pnp:Terms />
+          </pnp:Term>
+          <pnp:Term Name="News" ID="eefc0c7a-803c-4c02-a980-f2160b459a18" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="eefc0c7a-803c-4c02-a980-f2160b459a18">
+            <pnp:Terms />
+          </pnp:Term>
+          <pnp:Term Name="Policy" ID="63d5a4f2-2206-47ae-b49c-88c56a9cd141" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="63d5a4f2-2206-47ae-b49c-88c56a9cd141">
+            <pnp:Terms />
+          </pnp:Term>
+          <pnp:Term Name="Template" ID="57132c16-74c9-4a5c-be73-04a9d6da0527" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="57132c16-74c9-4a5c-be73-04a9d6da0527">
+            <pnp:Terms />
+          </pnp:Term>
+        </pnp:Terms>
+      </pnp:TermSet>
+      <pnp:TermSet Name="WorkspaceTypes" ID="1cd7fa98-ed70-4b55-9137-7c6a0dcfc22d" Description="">
+        <pnp:Terms>
+          <pnp:Term Name="Community" ID="2847958d-d5c4-4d18-b96d-3c8869fe0668" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="2847958d-d5c4-4d18-b96d-3c8869fe0668">
+            <pnp:Terms />
+          </pnp:Term>
+          <pnp:Term Name="Project" ID="654964f7-329b-4147-9681-ec0ec8c3b1f1" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="654964f7-329b-4147-9681-ec0ec8c3b1f1">
+            <pnp:Terms />
+          </pnp:Term>
+          <pnp:Term Name="Team" ID="aedf3f38-0f3f-4ad9-90fe-64740721b5b7" Owner="i:0#.f|membership|USER_PLACEHOLDER" Description="" SourceTermId="aedf3f38-0f3f-4ad9-90fe-64740721b5b7">
+            <pnp:Terms />
+          </pnp:Term>
+        </pnp:Terms>
+      </pnp:TermSet>
+    </pnp:TermSets>
+  </pnp:TermGroup>
+</pnp:TermGroups>
+

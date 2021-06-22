@@ -1,0 +1,387 @@
+{
+  "typeKey": "Project",
+  "label": {
+    "1031": "Projekt",
+    "1033": "Project"
+  },
+  "description": {
+    "1031": "Erstellung und Abwicklung von Projekten",
+    "1033": "Creation and handling of projects"
+  },
+  "provisioningConfig": {
+    "templateWebUrl": "https://TENANT_PLACEHOLDER.sharepoint.com/sites/intranet/",
+    "templateContainer": "PnPTemplates",
+    "templateNames": {
+      "GROUP#0": [
+        "team.tenant.xml"
+      ]
+    },
+    "customParameters": null
+  },
+  "fields": [
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "String",
+      "id": "Title",
+      "label": {
+        "1031": "Projekt Titel",
+        "1033": "Project Title"
+      },
+      "additionalProps": {
+        "multiline": false
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "String",
+      "id": "Description",
+      "label": {
+        "1031": "Arbeitsraumbeschreibung",
+        "1033": "Project Description"
+      },
+      "additionalProps": {
+        "multiline": true
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "Number",
+      "id": "ProjectNumber",
+      "label": {
+        "1031": "Projekt Nummer",
+        "1033": "Project Number"
+      },
+      "additionalProps": null
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "Choice",
+      "id": "Company",
+      "label": {
+        "1031": "Firma",
+        "1033": "Company"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "Company A",
+            "label": {
+              "1031": "Company A",
+              "1033": "Company A"
+            }
+          },
+          {
+            "value": "Company B",
+            "label": {
+              "1031": "Company B",
+              "1033": "Company B"
+            }
+          },
+          {
+            "value": "Company C",
+            "label": {
+              "1031": "Company C",
+              "1033": "Company C"
+            }
+          },
+          {
+            "value": "Company D",
+            "label": {
+              "1031": "Company D",
+              "1033": "Company D"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "Choice",
+      "id": "ProjectType",
+      "label": {
+        "1031": "Projekt Typ",
+        "1033": "Project Type"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "Consulting Project",
+            "label": {
+              "1031": "Beratungsprojekt",
+              "1033": "Consulting Project"
+            }
+          },
+          {
+            "value": "Digital Transformation",
+            "label": {
+              "1031": "Digitale Transformation",
+              "1033": "Digital Transformation"
+            }
+          },
+          {
+            "value": "General Service Project",
+            "label": {
+              "1031": "Allgemeines Service Projekt",
+              "1033": "General Service Project"
+            }
+          },
+          {
+            "value": "Infrastructure Project",
+            "label": {
+              "1031": "Infrastruktur Projekt",
+              "1033": "Infrastructure Project"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "Choice",
+      "id": "ProjectState",
+      "label": {
+        "1031": "Projekt Status",
+        "1033": "Project State"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "New",
+            "label": {
+              "1031": "Neu",
+              "1033": "New"
+            }
+          },
+          {
+            "value": "In Progress",
+            "label": {
+              "1031": "In Bearbeitung",
+              "1033": "In Progress"
+            }
+          },
+          {
+            "value": "On Hold",
+            "label": {
+              "1031": "In Wartestellung",
+              "1033": "On Hold"
+            }
+          },
+          {
+            "value": "Finished",
+            "label": {
+              "1031": "Beendet",
+              "1033": "Finished"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "MultiChoice",
+      "id": "BusinessProcess",
+      "label": {
+        "1031": "Geschäftsprozesse",
+        "1033": "Business Process"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "Cost Reduction",
+            "label": {
+              "1031": "Kostensenkung",
+              "1033": "Cost Reduction"
+            }
+          },
+          {
+            "value": "Customer Satisfaction",
+            "label": {
+              "1031": "Kundenzufriedenheit",
+              "1033": "Customer Satisfaction"
+            }
+          },
+          {
+            "value": "Quality Control",
+            "label": {
+              "1031": "Qualitätskontrolle",
+              "1033": "Quality Control"
+            }
+          },
+          {
+            "value": "Strategic Sourcing",
+            "label": {
+              "1031": "Strategische Beschaffung",
+              "1033": "Strategic Sourcing"
+            }
+          },
+          {
+            "value": "Supply Chain Design",
+            "label": {
+              "1031": "Gestaltung der Lieferkette",
+              "1033": "Supply Chain Design"
+            }
+          },
+          {
+            "value": "Technology",
+            "label": {
+              "1031": "Technologie",
+              "1033": "Technology"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "MultiChoice",
+      "id": "BusinessUnit",
+      "label": {
+        "1031": "Abteilung",
+        "1033": "Business Unit"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "Communications",
+            "label": {
+              "1031": "Kommunikation",
+              "1033": "Communications"
+            }
+          },
+          {
+            "value": "Human Resources",
+            "label": {
+              "1031": "Human Resources",
+              "1033": "Human Resources"
+            }
+          },
+          {
+            "value": "IT - Department",
+            "label": {
+              "1031": "IT - Abteilung",
+              "1033": "IT - Department"
+            }
+          },
+          {
+            "value": "Finance",
+            "label": {
+              "1031": "Finanzen",
+              "1033": "Finance"
+            }
+          },
+          {
+            "value": "Marketing",
+            "label": {
+              "1031": "Marketing",
+              "1033": "Marketing"
+            }
+          },
+          {
+            "value": "Manufacturing",
+            "label": {
+              "1031": "Fertigung",
+              "1033": "Manufacturing"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "MultiPerson",
+      "id": "GroupOwners",
+      "label": {
+        "1031": "Projekt Manager",
+        "1033": "Project Manager"
+      },
+      "additionalProps": null
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "None",
+      "defaultValue": null,
+      "type": "MultiPerson",
+      "id": "GroupMembers",
+      "label": {
+        "1031": "Projekt Mitglieder",
+        "1033": "Project Members"
+      },
+      "additionalProps": null
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "None",
+      "defaultValue": null,
+      "type": "MultiPerson",
+      "id": "Visitors",
+      "label": {
+        "1031": "Projekt Besucher",
+        "1033": "Project Visitors"
+      },
+      "additionalProps": null
+    }
+  ],
+  "creationOptions": {
+    "baseTemplate": "GROUP#0",
+    "lcid": 1033,
+    "additionalApps": [
+      "LiveTiles Intranet Metadata"
+    ],
+    "reloadOnUpdate": false,
+    "useExistingList": false,
+    "urlGeneration": {
+      "mode": "User",
+      "pattern": null,
+      "key": null
+    }
+  },
+  "parentTermId": "654964f7-329b-4147-9681-ec0ec8c3b1f1",
+  "allowDelete": false,
+  "approvalWorkflow": {
+    "isEnabled": true
+  },
+  "additionalProps": {},
+  "metadataIntegration": {
+    "configKey": "Project"
+  }
+}

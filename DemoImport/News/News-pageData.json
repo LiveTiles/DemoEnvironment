@@ -1,0 +1,34 @@
+[
+    {
+        "BannerImageUrl":  {
+                               "Description":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/40a79bdc-d5a1-4e60-abc8-8c1a705c3743/thumbnails/large.jpg?file=gettyimages-1221754481.jpg",
+                               "Url":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/40a79bdc-d5a1-4e60-abc8-8c1a705c3743/thumbnails/large.jpg?file=gettyimages-1221754481.jpg",
+                               "TypeId":  "{fa8b44af-7b43-43f2-904a-bd319497011e}"
+                           },
+        "Filename":  "Traverse-your-digital-workplace.aspx"
+    },
+    {
+        "BannerImageUrl":  {
+                               "Description":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/93962e27-cc71-4fd9-a806-1f95329ca3bd/thumbnails/large.jpg?file=gettyimages-707456495_super.jpg",
+                               "Url":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/93962e27-cc71-4fd9-a806-1f95329ca3bd/thumbnails/large.jpg?file=gettyimages-707456495_super.jpg",
+                               "TypeId":  "{fa8b44af-7b43-43f2-904a-bd319497011e}"
+                           },
+        "Filename":  "Mobilise.aspx"
+    },
+    {
+        "BannerImageUrl":  {
+                               "Description":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/bbffc46e-a046-4812-b6ae-b00e2639603e/thumbnails/large.jpg?file=gettyimages-879809148.jpg",
+                               "Url":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/bbffc46e-a046-4812-b6ae-b00e2639603e/thumbnails/large.jpg?file=gettyimages-879809148.jpg",
+                               "TypeId":  "{fa8b44af-7b43-43f2-904a-bd319497011e}"
+                           },
+        "Filename":  "The-digital-workplace-perfected.aspx"
+    },
+    {
+        "BannerImageUrl":  {
+                               "Description":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/1e9e8a1b-04a2-459c-abb5-fde5f53e3770/thumbnails/large.jpg?file=gettyimages-1090434684.jpg",
+                               "Url":  "https://cdn.hubblecontent.osi.office.net/m365content/publish/1e9e8a1b-04a2-459c-abb5-fde5f53e3770/thumbnails/large.jpg?file=gettyimages-1090434684.jpg",
+                               "TypeId":  "{fa8b44af-7b43-43f2-904a-bd319497011e}"
+                           },
+        "Filename":  "Take-the-quantum-leap-forward.aspx"
+    }
+]

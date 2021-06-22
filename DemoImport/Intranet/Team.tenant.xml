@@ -1,0 +1,19 @@
+<pnp:Provisioning
+  xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema">
+  <pnp:Preferences Author="MatchPoint" Version="1.0"/>
+  <pnp:Teams>
+    <pnp:Team GroupId="{parameter:GroupId}" DisplayName="{parameter:GroupDisplayName}" Description="{parameter:GroupDescription}" Visibility="Public">
+      <pnp:FunSettings AllowGiphy="true" GiphyContentRating="Moderate" AllowStickersAndMemes="true" AllowCustomMemes="true" />
+      <pnp:GuestSettings AllowCreateUpdateChannels="false"  AllowDeleteChannels="false" />
+      <pnp:MembersSettings AllowCreateUpdateChannels="true" AllowDeleteChannels="true" AllowAddRemoveApps="true" AllowCreateUpdateRemoveConnectors="true" AllowCreateUpdateRemoveTabs="true" />
+      <pnp:MessagingSettings AllowUserEditMessages="true" AllowUserDeleteMessages="true" AllowOwnerDeleteMessages="false" AllowTeamMentions="true" AllowChannelMentions="true" />
+      <pnp:Channels>
+        <pnp:Channel DisplayName="General" Description="General">
+          <pnp:Tabs>
+            <pnp:Tab DisplayName="Wiki" TeamsAppId="com.microsoft.teamspace.tab.wiki" Remove="true" />
+          </pnp:Tabs>
+        </pnp:Channel>
+      </pnp:Channels>
+    </pnp:Team>
+  </pnp:Teams>
+</pnp:Provisioning>

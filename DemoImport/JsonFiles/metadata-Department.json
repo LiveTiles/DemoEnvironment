@@ -1,0 +1,38 @@
+{
+  "key": "Department",
+  "title": "Department Metadata inheritance",
+  "description": "Metadata inheritance for Departments",
+  "source": {
+    "sourceType": "Workspace",
+    "url": null,
+    "fields": [
+      {
+        "fieldName": "BusinessUnit",
+        "label": null,
+        "fieldValue": null,
+        "additionalProps": null,
+        "writeFieldMode": null
+      },
+      {
+        "fieldName": "Location",
+        "label": null,
+        "fieldValue": null,
+        "additionalProps": null,
+        "writeFieldMode": null
+      }
+    ]
+  },
+  "targets": [
+    {
+      "url": "Shared Documents",
+      "fields": [],
+      "targets": []
+    },
+    {
+      "url": "SitePages",
+      "fields": [],
+      "targets": []
+    }
+  ],
+  "fields": []
+}

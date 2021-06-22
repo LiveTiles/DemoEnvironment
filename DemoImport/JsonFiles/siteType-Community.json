@@ -1,0 +1,59 @@
+{
+  "typeKey": "Community",
+  "label": {
+    "1033": "Community"
+  },
+  "description": {
+    "1031": "Arbeitsbereich für den Wissensaustausch für Praxis-Arbeitsgruppen",
+    "1033": "Knowledge exchange workspace for communities of practice"
+  },
+  "fields": [
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "String",
+      "id": "Title",
+      "label": {
+        "1031": "Community Titel",
+        "1033": "Community Site Title"
+      },
+      "additionalProps": {
+        "multiline": false
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "String",
+      "id": "Description",
+      "label": {
+        "1031": "Arbeitsraumbeschreibung",
+        "1033": "Workspace Description"
+      },
+      "additionalProps": {
+        "multiline": true
+      }
+    }
+  ],
+  "creationOptions": {
+    "baseTemplate": "SITEPAGEPUBLISHING#0",
+    "lcid": 1033,
+    "additionalApps": [],
+    "reloadOnUpdate": false,
+    "useExistingList": false,
+    "urlGeneration": {
+      "mode": "User",
+      "pattern": null,
+      "key": null
+    }
+  },
+  "parentTermId": "2847958d-d5c4-4d18-b96d-3c8869fe0668",
+  "allowDelete": false,
+  "additionalProps": {}
+}

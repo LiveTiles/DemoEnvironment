@@ -1,0 +1,26 @@
+[
+    {
+        "BannerImageUrl":  {
+                               "Description":  "/_layouts/15/images/sitepagethumbnail.png",
+                               "Url":  "https://lvtmaster.sharepoint.com/_layouts/15/images/sitepagethumbnail.png",
+                               "TypeId":  "{fa8b44af-7b43-43f2-904a-bd319497011e}"
+                           },
+        "Filename":  "HomeSharePointContent.aspx"
+    },
+    {
+        "BannerImageUrl":  {
+                               "Description":  "/sites/intranet/SiteAssets/SitePages/WebpartConfig/Workday.png",
+                               "Url":  "https://lvtmaster.sharepoint.com/sites/intranet/SiteAssets/SitePages/WebpartConfig/Workday.png",
+                               "TypeId":  "{fa8b44af-7b43-43f2-904a-bd319497011e}"
+                           },
+        "Filename":  "WebpartConfig.aspx"
+    },
+    {
+        "BannerImageUrl":  {
+                               "Description":  "/_layouts/15/images/sitepagethumbnail.png",
+                               "Url":  "https://lvtmaster.sharepoint.com/_layouts/15/images/sitepagethumbnail.png",
+                               "TypeId":  "{fa8b44af-7b43-43f2-904a-bd319497011e}"
+                           },
+        "Filename":  "HomeReachContent.aspx"
+    }
+]

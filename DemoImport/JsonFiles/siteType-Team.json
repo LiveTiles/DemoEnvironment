@@ -1,0 +1,334 @@
+{
+  "typeKey": "Team",
+  "label": {
+    "1033": "Team"
+  },
+  "description": {
+    "1031": "Kollaborationsarbeitsbereich für Teams",
+    "1033": "Collaboration workspace for teams"
+  },
+  "provisioningConfig": {
+    "templateWebUrl": "https://TENANT_PLACEHOLDER.sharepoint.com/sites/intranet/",
+    "templateContainer": "PnPTemplates",
+    "templateNames": {
+      "GROUP#0": [
+        "team.tenant.xml"
+      ]
+    },
+    "customParameters": null
+  },
+  "fields": [
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "String",
+      "id": "Title",
+      "label": {
+        "1031": "Team Titel",
+        "1033": "Team Title"
+      },
+      "additionalProps": {
+        "multiline": false
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "None",
+      "defaultValue": null,
+      "type": "String",
+      "id": "Description",
+      "label": {
+        "1031": "Team Beschreibung",
+        "1033": "Team Description"
+      },
+      "additionalProps": {
+        "multiline": true
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "MultiChoice",
+      "id": "LTContentType",
+      "label": {
+        "1031": "Inhaltstyp",
+        "1033": "Content Type"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "Communications",
+            "label": {
+              "1031": "Kommunikation",
+              "1033": "Communications"
+            }
+          },
+          {
+            "value": "Templates",
+            "label": {
+              "1031": "Vorlagen",
+              "1033": "Templates"
+            }
+          },
+          {
+            "value": "Deposit",
+            "label": {
+              "1031": "Dekoumentenablage",
+              "1033": "Document Deposit"
+            }
+          },
+          {
+            "value": "Various",
+            "label": {
+              "1031": "Diverse",
+              "1033": "Variouos"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "MultiChoice",
+      "id": "BusinessUnit",
+      "label": {
+        "1031": "Abteilung",
+        "1033": "Business Unit"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "Communications",
+            "label": {
+              "1031": "Kommunikation",
+              "1033": "Communications"
+            }
+          },
+          {
+            "value": "Human Resources",
+            "label": {
+              "1031": "Human Resources",
+              "1033": "Human Resources"
+            }
+          },
+          {
+            "value": "IT - Department",
+            "label": {
+              "1031": "IT - Abteilung",
+              "1033": "IT - Department"
+            }
+          },
+          {
+            "value": "Finance",
+            "label": {
+              "1031": "Finanzen",
+              "1033": "Finance"
+            }
+          },
+          {
+            "value": "Marketing",
+            "label": {
+              "1031": "Marketing",
+              "1033": "Marketing"
+            }
+          },
+          {
+            "value": "Services",
+            "label": {
+              "1031": "Services",
+              "1033": "Services"
+            }
+          },
+          {
+            "value": "Innovation",
+            "label": {
+              "1031": "Innovation",
+              "1033": "Innovation"
+            }
+          },
+          {
+            "value": "Support",
+            "label": {
+              "1031": "Support",
+              "1033": "Support"
+            }
+          },
+          {
+            "value": "Manufacturing",
+            "label": {
+              "1031": "Fertigung",
+              "1033": "Manufacturing"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "MultiChoice",
+      "id": "Location",
+      "label": {
+        "1031": "Standort",
+        "1033": "Location"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "NA",
+            "label": {
+              "1031": "Nordamerika",
+              "1033": "North America"
+            }
+          },
+          {
+            "value": "SA",
+            "label": {
+              "1031": "Südamerika",
+              "1033": "South America"
+            }
+          },
+          {
+            "value": "Africa",
+            "label": {
+              "1031": "Afrika",
+              "1033": "Africa"
+            }
+          },
+          {
+            "value": "Europe",
+            "label": {
+              "1031": "Europa",
+              "1033": "Europe"
+            }
+          },
+          {
+            "value": "Asia",
+            "label": {
+              "1031": "Asien",
+              "1033": "Asia"
+            }
+          },
+          {
+            "value": "AUS",
+            "label": {
+              "1031": "Australien und Ozeanien",
+              "1033": "Australia and Oceania"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "Edit",
+      "mandatory": "Create",
+      "defaultValue": null,
+      "type": "MultiPerson",
+      "id": "GroupOwners",
+      "label": {
+        "1031": "Team Manager",
+        "1033": "Team Manager"
+      },
+      "additionalProps": null
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "Edit",
+      "mandatory": "Create",
+      "defaultValue": null,
+      "type": "MultiPerson",
+      "id": "GroupMembers",
+      "label": {
+        "1031": "Team Mitglieder",
+        "1033": "Team Members"
+      },
+      "additionalProps": null
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "None",
+      "defaultValue": null,
+      "type": "MultiPerson",
+      "id": "Visitors",
+      "label": {
+        "1031": "Team Besucher",
+        "1033": "Team Visitors"
+      },
+      "additionalProps": null
+    },
+    {
+      "doNotPersist": false,
+      "visibility": "Both",
+      "readonly": "None",
+      "mandatory": "Both",
+      "defaultValue": null,
+      "type": "Choice",
+      "id": "TeamState",
+      "label": {
+        "1031": "Team Status",
+        "1033": "Team State"
+      },
+      "additionalProps": {
+        "Choices": [
+          {
+            "value": "Aktiv",
+            "label": {
+              "1031": "Aktiv",
+              "1033": "Active"
+            }
+          },
+          {
+            "value": "Inaktiv",
+            "label": {
+              "1031": "Inaktiv",
+              "1033": "Inactive"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "creationOptions": {
+    "baseTemplate": "GROUP#0",
+    "lcid": 1033,
+    "additionalApps": [
+      "LiveTiles Intranet Metadata"
+    ],
+    "reloadOnUpdate": false,
+    "useExistingList": false,
+    "urlGeneration": {
+      "mode": "User",
+      "pattern": null,
+      "key": null
+    }
+  },
+  "parentTermId": "aedf3f38-0f3f-4ad9-90fe-64740721b5b7",
+  "allowDelete": false,
+  "approvalWorkflow": {
+    "isEnabled": true
+  },
+  "additionalProps": {},
+  "metadataIntegration": {
+    "configKey": "Team"
+  }
+}
