@@ -28,8 +28,6 @@ if (($PSVersionTable.PSVersion.Major -lt 5) -or (($PSVersionTable.PSVersion.Majo
 function ImportSite {
     param(
         [Parameter(Mandatory=$true)]
-        [String]$siteUrl,
-        [Parameter(Mandatory=$true)]
         [String]$siteName,
         [Parameter(Mandatory=$true)]
         [String]$targetUser
@@ -37,13 +35,11 @@ function ImportSite {
 
     Write-Host "Importing $siteName ..."
 
-    Connect-PnPOnline -Url $importUrl -Interactive
-
     ((Get-Content -Path "$siteName/$siteName-Template.xml" -Raw) -replace "USER_PLACEHOLDER", "$targetUser") | Set-Content -Path "$siteName/$siteName-TemplateReplaced.xml"
 
     Invoke-PnPSiteTemplate -Path "$siteName/$siteName-TemplateReplaced.xml"
 
-    PublishPages -siteUrl $siteUrl -siteName $siteName
+    PublishPages -siteName $siteName
 
     Write-Host "Done"
 }
@@ -94,15 +90,10 @@ function ConfigureSite {
 function PublishPages {
     param(
         [Parameter(Mandatory=$true)]
-        [String]$siteUrl,
-        [Parameter(Mandatory=$true)]
         [String]$siteName
     )
 
     $pageDataArray = Get-Content -Path "$siteName/$siteName-pageData.json" | ConvertFrom-Json
-
-    #Connect to PnP Online
-    Connect-PnPOnline -Url $siteUrl -Interactive
 
     $list = Get-PnPList -Identity "SitePages"
 
@@ -118,6 +109,42 @@ function PublishPages {
             $null = Set-PnPPage -Identity $filename -Publish
         }
     }
+}
+
+function Import-LiveTilesTheme {
+
+    $themepalette = @{
+        "themePrimary" = "#7c4dff";
+        "themeLighterAlt" = "#faf8ff";
+        "themeLighter" = "#eae2ff";
+        "themeLight" = "#d8c9ff";
+        "themeTertiary" = "#b094ff";
+        "themeSecondary" = "#8c62ff";
+        "themeDarkAlt" = "#7045e6";
+        "themeDark" = "#5e3ac2";
+        "themeDarker" = "#452b8f";
+        "neutralLighterAlt" = "#f8f8f8";
+        "neutralLighter" = "#f4f4f4";
+        "neutralLight" = "#eaeaea";
+        "neutralQuaternaryAlt" = "#dadada";
+        "neutralQuaternary" = "#d0d0d0";
+        "neutralTertiaryAlt" = "#c8c8c8";
+        "neutralTertiary" = "#c2c2c2";
+        "neutralSecondary" = "#858585";
+        "neutralPrimaryAlt" = "#4b4b4b";
+        "neutralPrimary" = "#333333";
+        "neutralDark" = "#272727";
+        "black" = "#1d1d1d";
+        "white" = "#ffffff";
+        "primaryBackground" = "#ffffff";
+        "primaryText" = "#333333";
+        "bodyBackground" = "#ffffff";
+        "bodyText" = "#333333";
+        "disabledBackground" = "#f4f4f4";
+        "disabledText" = "#c8c8c8";
+    }
+
+    Add-PnPTenantTheme -Identity "LiveTiles" -Palette $themepalette -IsInverted $false -Overwrite
 }
 
 function ImportDocuments {
@@ -156,6 +183,8 @@ function UpdateJsonFiles {
 $tenantUrl = "https://$tenantName.sharepoint.com"
 Connect-PnPOnline -Url $tenantUrl -Interactive
 
+Import-LiveTilesTheme
+
 $importUrl = "$tenantUrl$importUrl"
 
 $site = Get-PnPTenantSite -Identity $importUrl -ErrorAction SilentlyContinue
@@ -165,10 +194,13 @@ if($site -eq $null) {
     Exit
 }
 
-ImportSite -siteUrl $importUrl -siteName "Intranet" -targetUser $targetUser
-ImportSite -siteUrl $importUrl -siteName "News" -targetUser $targetUser
-ImportSite -siteUrl $importUrl -siteName "Policies" -targetUser $targetUser
-ImportSite -siteUrl $importUrl -siteName "Topics" -targetUser $targetUser
+Connect-PnPOnline -Url $importUrl -Interactive
+
+Set-PnPWebTheme -Theme LiveTiles
+ImportSite -siteName "Intranet" -targetUser $targetUser
+ImportSite -siteName "News" -targetUser $targetUser
+ImportSite -siteName "Policies" -targetUser $targetUser
+ImportSite -siteName "Topics" -targetUser $targetUser
 ImportDocuments
 
 ConfigureSite -siteUrl $importUrl
