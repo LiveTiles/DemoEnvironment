@@ -1,45 +1,10 @@
 <?xml version="1.0"?>
 <pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
   <pnp:Preferences Generator="PnP.Framework, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null" />
-  <pnp:Templates ID="CONTAINER-TEMPLATE-E6AB5E82EBBC46568229BDDAEF6308D8">
-    <pnp:ProvisioningTemplate ID="TEMPLATE-E6AB5E82EBBC46568229BDDAEF6308D8" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
+  <pnp:Templates ID="CONTAINER-TEMPLATE-1A8867C6208D43A3A9AFD32CB6413E2D">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-1A8867C6208D43A3A9AFD32CB6413E2D" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
       <pnp:WebSettings NoCrawl="false" WelcomePage="SitePages/HomeReachContent.aspx" CommentsOnSitePagesDisabled="false" QuickLaunchEnabled="false" SearchScope="DefaultScope" SearchBoxInNavBar="Inherit" />
       <pnp:Lists>
-        <pnp:ListInstance Title="PnPTemplates" Description="" DocumentTemplate="{site}/PnPTemplates/Forms/template.dotx" TemplateType="101" Url="PnPTemplates" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="500" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" DefaultDisplayFormUrl="{site}/PnPTemplates/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/PnPTemplates/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/PnPTemplates/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
-          <pnp:ContentTypeBindings>
-            <pnp:ContentTypeBinding ContentTypeID="0x0101" Default="true" />
-            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
-          </pnp:ContentTypeBindings>
-          <pnp:Views>
-            <View Name="{C21D1F00-A79B-4F96-86E5-2D95F1E731A7}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Documents" Url="{site}/PnPTemplates/Forms/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
-              <Query>
-                <OrderBy>
-                  <FieldRef Name="FileLeafRef" />
-                </OrderBy>
-              </Query>
-              <ViewFields>
-                <FieldRef Name="DocIcon" />
-                <FieldRef Name="LinkFilename" />
-                <FieldRef Name="Modified" />
-                <FieldRef Name="Editor" />
-              </ViewFields>
-              <RowLimit Paged="TRUE">30</RowLimit>
-              <JSLink>clienttemplates.js</JSLink>
-            </View>
-          </pnp:Views>
-          <pnp:FieldRefs>
-            <pnp:FieldRef ID="d307dff3-340f-44a2-9f4b-fbfe1ba07459" Name="_CommentCount" DisplayName="Comment count" />
-            <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count" />
-            <pnp:FieldRef ID="cb19284a-cde7-4570-a980-1dab8bd74470" Name="_ExtendedDescription" DisplayName="Description" />
-          </pnp:FieldRefs>
-          <pnp:Security>
-            <pnp:BreakRoleInheritance CopyRoleAssignments="false" ClearSubscopes="false">
-              <pnp:RoleAssignment Principal="{associatedownergroupid}" RoleDefinition="Full Control" />
-              <pnp:RoleAssignment Principal="{associatedvisitorgroupid}" RoleDefinition="Read" />
-              <pnp:RoleAssignment Principal="{associatedmembergroupid}" RoleDefinition="Edit" />
-            </pnp:BreakRoleInheritance>
-          </pnp:Security>
-        </pnp:ListInstance>
         <pnp:ListInstance Title="Events" Description="" DocumentTemplate="" TemplateType="106" Url="Lists/Events" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-ec85-4903-972d-ebe475780106" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/Events/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/Events/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/Events/NewForm.aspx" ImageUrl="/_layouts/15/images/itevent.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
           <pnp:ContentTypeBindings>
             <pnp:ContentTypeBinding ContentTypeID="0x0102" Default="true" />
@@ -137,166 +102,44 @@
             <pnp:FieldRef ID="f2e63656-135e-4f1c-8fc2-ccbe74071901" Name="fRecurrence" DisplayName="Recurrence" />
             <pnp:FieldRef ID="6df9bd52-550e-4a30-bc31-a4366832a87d" Name="Category" DisplayName="Category" />
           </pnp:FieldRefs>
-          <pnp:DataRows UpdateBehavior="Overwrite">
-            <pnp:DataRow>
-              <pnp:DataValue FieldName="Title">LiveTiles Reach Training</pnp:DataValue>
-              <pnp:DataValue FieldName="Order">100</pnp:DataValue>
-              <pnp:DataValue FieldName="FileLeafRef">1_.000</pnp:DataValue>
-              <pnp:DataValue FieldName="MetaInfo" />
-              <pnp:DataValue FieldName="Location">Toldbodgade 18, 1253 Copenhagen, Denmark</pnp:DataValue>
-              <pnp:DataValue FieldName="Geolocation" />
-              <pnp:DataValue FieldName="EventDate">01/06/2021 13:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="EndDate">01/06/2021 14:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="Description">&lt;p&gt;​&lt;/p&gt;&lt;table class="ms-formtable" border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation" style="margin-top&amp;#58;8px;"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td valign="top" class="ms-formbody" width="350px"&gt;&lt;div&gt;&lt;div&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&lt;p&gt;&amp;#160;&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;​&lt;br&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</pnp:DataValue>
-              <pnp:DataValue FieldName="fAllDayEvent">False</pnp:DataValue>
-              <pnp:DataValue FieldName="fRecurrence">False</pnp:DataValue>
-              <pnp:DataValue FieldName="WorkspaceLink" />
-              <pnp:DataValue FieldName="EventType">0</pnp:DataValue>
-              <pnp:DataValue FieldName="UID" />
-              <pnp:DataValue FieldName="RecurrenceID" />
-              <pnp:DataValue FieldName="EventCanceled" />
-              <pnp:DataValue FieldName="Duration">3600</pnp:DataValue>
-              <pnp:DataValue FieldName="RecurrenceData" />
-              <pnp:DataValue FieldName="TimeZone" />
-              <pnp:DataValue FieldName="XMLTZone" />
-              <pnp:DataValue FieldName="MasterSeriesItemID" />
-              <pnp:DataValue FieldName="Workspace" />
-              <pnp:DataValue FieldName="ParticipantsPicker" />
-              <pnp:DataValue FieldName="Category">Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="FreeBusy" />
-              <pnp:DataValue FieldName="Overbook" />
-              <pnp:DataValue FieldName="Participants" />
-              <pnp:DataValue FieldName="BannerUrl" />
-              <pnp:DataValue FieldName="BannerImageUrl" />
-            </pnp:DataRow>
-            <pnp:DataRow>
-              <pnp:DataValue FieldName="Title">May monthly update</pnp:DataValue>
-              <pnp:DataValue FieldName="Order">200</pnp:DataValue>
-              <pnp:DataValue FieldName="FileLeafRef">2_.000</pnp:DataValue>
-              <pnp:DataValue FieldName="MetaInfo" />
-              <pnp:DataValue FieldName="Location">Toldbodgade 18, 1253 Copenhagen, Denmark</pnp:DataValue>
-              <pnp:DataValue FieldName="Geolocation" />
-              <pnp:DataValue FieldName="EventDate">31/05/2021 14:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="EndDate">31/05/2021 15:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="Description">&lt;p&gt;​&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.​&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</pnp:DataValue>
-              <pnp:DataValue FieldName="fAllDayEvent">False</pnp:DataValue>
-              <pnp:DataValue FieldName="fRecurrence">False</pnp:DataValue>
-              <pnp:DataValue FieldName="WorkspaceLink" />
-              <pnp:DataValue FieldName="EventType">0</pnp:DataValue>
-              <pnp:DataValue FieldName="UID" />
-              <pnp:DataValue FieldName="RecurrenceID" />
-              <pnp:DataValue FieldName="EventCanceled" />
-              <pnp:DataValue FieldName="Duration">3600</pnp:DataValue>
-              <pnp:DataValue FieldName="RecurrenceData" />
-              <pnp:DataValue FieldName="TimeZone" />
-              <pnp:DataValue FieldName="XMLTZone" />
-              <pnp:DataValue FieldName="MasterSeriesItemID" />
-              <pnp:DataValue FieldName="Workspace" />
-              <pnp:DataValue FieldName="ParticipantsPicker" />
-              <pnp:DataValue FieldName="Category">Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="FreeBusy" />
-              <pnp:DataValue FieldName="Overbook" />
-              <pnp:DataValue FieldName="Participants" />
-              <pnp:DataValue FieldName="BannerUrl" />
-              <pnp:DataValue FieldName="BannerImageUrl" />
-            </pnp:DataRow>
-            <pnp:DataRow>
-              <pnp:DataValue FieldName="Title">June Monthly Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="Order">300</pnp:DataValue>
-              <pnp:DataValue FieldName="FileLeafRef">3_.000</pnp:DataValue>
-              <pnp:DataValue FieldName="MetaInfo" />
-              <pnp:DataValue FieldName="Location">Toldbodgade 18, 1253 Copenhagen, Denmark</pnp:DataValue>
-              <pnp:DataValue FieldName="Geolocation" />
-              <pnp:DataValue FieldName="EventDate">30/06/2021 14:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="EndDate">30/06/2021 15:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="Description">&lt;p&gt;​&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.​&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</pnp:DataValue>
-              <pnp:DataValue FieldName="fAllDayEvent">False</pnp:DataValue>
-              <pnp:DataValue FieldName="fRecurrence">False</pnp:DataValue>
-              <pnp:DataValue FieldName="WorkspaceLink" />
-              <pnp:DataValue FieldName="EventType">0</pnp:DataValue>
-              <pnp:DataValue FieldName="UID" />
-              <pnp:DataValue FieldName="RecurrenceID" />
-              <pnp:DataValue FieldName="EventCanceled" />
-              <pnp:DataValue FieldName="Duration">3600</pnp:DataValue>
-              <pnp:DataValue FieldName="RecurrenceData" />
-              <pnp:DataValue FieldName="TimeZone" />
-              <pnp:DataValue FieldName="XMLTZone" />
-              <pnp:DataValue FieldName="MasterSeriesItemID" />
-              <pnp:DataValue FieldName="Workspace" />
-              <pnp:DataValue FieldName="ParticipantsPicker" />
-              <pnp:DataValue FieldName="Category">Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="FreeBusy" />
-              <pnp:DataValue FieldName="Overbook" />
-              <pnp:DataValue FieldName="Participants" />
-              <pnp:DataValue FieldName="BannerUrl" />
-              <pnp:DataValue FieldName="BannerImageUrl" />
-            </pnp:DataRow>
-            <pnp:DataRow>
-              <pnp:DataValue FieldName="Title">August Monthly Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="Order">400</pnp:DataValue>
-              <pnp:DataValue FieldName="FileLeafRef">4_.000</pnp:DataValue>
-              <pnp:DataValue FieldName="MetaInfo" />
-              <pnp:DataValue FieldName="Location">Toldbodgade 18, 1253 Copenhagen, Denmark</pnp:DataValue>
-              <pnp:DataValue FieldName="Geolocation" />
-              <pnp:DataValue FieldName="EventDate">31/08/2021 14:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="EndDate">31/08/2021 15:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="Description">&lt;p&gt;​&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.​&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</pnp:DataValue>
-              <pnp:DataValue FieldName="fAllDayEvent">False</pnp:DataValue>
-              <pnp:DataValue FieldName="fRecurrence">False</pnp:DataValue>
-              <pnp:DataValue FieldName="WorkspaceLink" />
-              <pnp:DataValue FieldName="EventType">0</pnp:DataValue>
-              <pnp:DataValue FieldName="UID" />
-              <pnp:DataValue FieldName="RecurrenceID" />
-              <pnp:DataValue FieldName="EventCanceled" />
-              <pnp:DataValue FieldName="Duration">3600</pnp:DataValue>
-              <pnp:DataValue FieldName="RecurrenceData" />
-              <pnp:DataValue FieldName="TimeZone" />
-              <pnp:DataValue FieldName="XMLTZone" />
-              <pnp:DataValue FieldName="MasterSeriesItemID" />
-              <pnp:DataValue FieldName="Workspace" />
-              <pnp:DataValue FieldName="ParticipantsPicker" />
-              <pnp:DataValue FieldName="Category">Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="FreeBusy" />
-              <pnp:DataValue FieldName="Overbook" />
-              <pnp:DataValue FieldName="Participants" />
-              <pnp:DataValue FieldName="BannerUrl" />
-              <pnp:DataValue FieldName="BannerImageUrl" />
-            </pnp:DataRow>
-            <pnp:DataRow>
-              <pnp:DataValue FieldName="Title">September Monthly Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="Order">500</pnp:DataValue>
-              <pnp:DataValue FieldName="FileLeafRef">5_.000</pnp:DataValue>
-              <pnp:DataValue FieldName="MetaInfo" />
-              <pnp:DataValue FieldName="Location">Toldbodgade 18, 1253 Copenhagen, Denmark</pnp:DataValue>
-              <pnp:DataValue FieldName="Geolocation" />
-              <pnp:DataValue FieldName="EventDate">30/09/2021 14:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="EndDate">30/09/2021 15:00:00</pnp:DataValue>
-              <pnp:DataValue FieldName="Description">&lt;p&gt;​&lt;/p&gt;&lt;div&gt;&lt;table class="ms-formtable" border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation" style="margin-top&amp;#58;8px;"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td valign="top" class="ms-formbody" width="350px"&gt;&lt;div&gt;&lt;div&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.​&lt;br&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</pnp:DataValue>
-              <pnp:DataValue FieldName="fAllDayEvent">False</pnp:DataValue>
-              <pnp:DataValue FieldName="fRecurrence">False</pnp:DataValue>
-              <pnp:DataValue FieldName="WorkspaceLink" />
-              <pnp:DataValue FieldName="EventType">0</pnp:DataValue>
-              <pnp:DataValue FieldName="UID" />
-              <pnp:DataValue FieldName="RecurrenceID" />
-              <pnp:DataValue FieldName="EventCanceled" />
-              <pnp:DataValue FieldName="Duration">3600</pnp:DataValue>
-              <pnp:DataValue FieldName="RecurrenceData" />
-              <pnp:DataValue FieldName="TimeZone" />
-              <pnp:DataValue FieldName="XMLTZone" />
-              <pnp:DataValue FieldName="MasterSeriesItemID" />
-              <pnp:DataValue FieldName="Workspace" />
-              <pnp:DataValue FieldName="ParticipantsPicker" />
-              <pnp:DataValue FieldName="Category">Meeting</pnp:DataValue>
-              <pnp:DataValue FieldName="FreeBusy" />
-              <pnp:DataValue FieldName="Overbook" />
-              <pnp:DataValue FieldName="Participants" />
-              <pnp:DataValue FieldName="BannerUrl" />
-              <pnp:DataValue FieldName="BannerImageUrl" />
-            </pnp:DataRow>
-          </pnp:DataRows>
           <pnp:FieldDefaults>
             <pnp:FieldDefault FieldName="Category" />
           </pnp:FieldDefaults>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="PnPTemplates" Description="" DocumentTemplate="{site}/PnPTemplates/Forms/template.dotx" TemplateType="101" Url="PnPTemplates" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="500" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" DefaultDisplayFormUrl="{site}/PnPTemplates/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/PnPTemplates/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/PnPTemplates/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x0101" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{C21D1F00-A79B-4F96-86E5-2D95F1E731A7}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Documents" Url="{site}/PnPTemplates/Forms/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="FileLeafRef" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="d307dff3-340f-44a2-9f4b-fbfe1ba07459" Name="_CommentCount" DisplayName="Comment count" />
+            <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count" />
+            <pnp:FieldRef ID="cb19284a-cde7-4570-a980-1dab8bd74470" Name="_ExtendedDescription" DisplayName="Description" />
+          </pnp:FieldRefs>
+          <pnp:Security>
+            <pnp:BreakRoleInheritance CopyRoleAssignments="false" ClearSubscopes="false">
+              <pnp:RoleAssignment Principal="{associatedownergroupid}" RoleDefinition="Full Control" />
+              <pnp:RoleAssignment Principal="{associatedvisitorgroupid}" RoleDefinition="Read" />
+              <pnp:RoleAssignment Principal="{associatedmembergroupid}" RoleDefinition="Edit" />
+            </pnp:BreakRoleInheritance>
+          </pnp:Security>
         </pnp:ListInstance>
       </pnp:Lists>
       <pnp:Files>
@@ -415,3 +258,4 @@
     </pnp:ProvisioningTemplate>
   </pnp:Templates>
 </pnp:Provisioning>
+
