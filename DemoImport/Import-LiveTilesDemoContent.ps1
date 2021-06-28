@@ -15,17 +15,7 @@ if (($PSVersionTable.PSVersion.Major -lt 5) -or (($PSVersionTable.PSVersion.Majo
     Exit
 }
 
-# 
-
-#$tenantName = "trywizdom07"
-#$importUrl = "/sites/intranet"
-#$targetUser = "admin@trywizdom07.onmicrosoft.com"
-#$targetReachSubscription = "fe3f9bf2-bf77-4c9b-b02f-c39b5ddc66fe"
-
-#.\importContent.ps1 -tenantName "trywizdom07" -importUrl "/sites/intranet" -targetUser "admin@trywizdom07.onmicrosoft.com" -targetReachSubscription "fe3f9bf2-bf77-4c9b-b02f-c39b5ddc66fe"
-#.\importContent.ps1 -tenantName "trywizdom25" -importUrl "/sites/intranet" -targetUser "admin@trywizdom25.onmicrosoft.com" -targetReachSubscription "23cc5a8c-7457-41ee-9020-9e56d54be18b"
-
-function ImportSite {
+function Import-LiveTilesSite {
     param(
         [Parameter(Mandatory=$true)]
         [String]$siteName,
@@ -39,15 +29,13 @@ function ImportSite {
 
     Invoke-PnPSiteTemplate -Path "$siteName/$siteName-TemplateReplaced.xml"
 
-    PublishPages -siteName $siteName
+    Publish-LiveTilesPages -siteName $siteName
 
     Write-Host "Done"
 }
 
-function ImportTermGroup {
+function Import-LiveTilesTermGroup {
     param(
-        [Parameter(Mandatory=$true)]
-        [String]$siteUrl,
         [Parameter(Mandatory=$true)]
         [String]$targetUser
     )
@@ -55,24 +43,16 @@ function ImportTermGroup {
     Write-Host "Importing term group $termGroupId ..."
 
     ((Get-Content -Path "Terms/Terms.xml" -Raw) -replace "USER_PLACEHOLDER", $targetUser) | Set-Content -Path "Terms/TermsReplaced.xml"
-
-    Connect-PnPOnline -Url $siteUrl -Interactive
     
     Import-PnPTermGroupFromXml -Path "Terms/TermsReplaced.xml"
     Write-Host "Done"
 }
 
-function ConfigureSite {
-    param(
-        [Parameter(Mandatory=$true)]
-        [String]$siteUrl
-    )
+function Configure-LiveTilesSite {
+    param(    )
     
     Write-Host "Configuring site ..."
 
-    #Connect to PnP Online
-    Connect-PnPOnline -Url $siteUrl -Interactive
- 
     #Get the Site
     $Site = Get-PnPSite –Includes CustomScriptSafeDomains  
  
@@ -87,7 +67,7 @@ function ConfigureSite {
     Write-Host "Done"
 }
 
-function PublishPages {
+function Publish-LiveTilesPages {
     param(
         [Parameter(Mandatory=$true)]
         [String]$siteName
@@ -147,7 +127,7 @@ function Import-LiveTilesTheme {
     Add-PnPTenantTheme -Identity "LiveTiles" -Palette $themepalette -IsInverted $false -Overwrite
 }
 
-function ImportDocuments {
+function Import-LiveTilesDemoDocuments {
     
     Write-Host "Importing demo documents ..."
 
@@ -161,7 +141,7 @@ function ImportDocuments {
     Write-Host "Done"
 }
 
-function UpdateJsonFiles {
+function Update-LiveTilesJsonFiles {
     param(
         [Parameter(Mandatory=$true)]
         [String]$tenantName,
@@ -184,6 +164,8 @@ $tenantUrl = "https://$tenantName.sharepoint.com"
 Connect-PnPOnline -Url $tenantUrl -Interactive
 
 Import-LiveTilesTheme
+Import-LiveTilesTermGroup -targetUser $targetUser 
+
 
 $importUrl = "$tenantUrl$importUrl"
 
@@ -197,14 +179,13 @@ if($site -eq $null) {
 Connect-PnPOnline -Url $importUrl -Interactive
 
 Set-PnPWebTheme -Theme LiveTiles
-ImportSite -siteName "Intranet" -targetUser $targetUser
-ImportSite -siteName "News" -targetUser $targetUser
-ImportSite -siteName "Policies" -targetUser $targetUser
-ImportSite -siteName "Topics" -targetUser $targetUser
-ImportDocuments
+Import-LiveTilesSite -siteName "Intranet" -targetUser $targetUser
+Import-LiveTilesSite -siteName "News" -targetUser $targetUser
+Import-LiveTilesSite -siteName "Policies" -targetUser $targetUser
+Import-LiveTilesSite -siteName "Topics" -targetUser $targetUser
+Import-LiveTilesDemoDocuments
+Configure-LiveTilesSite
 
-ConfigureSite -siteUrl $importUrl
-ImportTermGroup -siteUrl $importUrl -targetUser $targetUser 
 if($targetReachSubscription -ne $null){
-    UpdateJsonFiles -tenantName $tenantName -targetSubscription $targetReachSubscription
+    Update-LiveTilesJsonFiles -tenantName $tenantName -targetSubscription $targetReachSubscription
 }
