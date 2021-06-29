@@ -28,6 +28,7 @@ function Import-LiveTilesSite {
     ((Get-Content -Path "$siteName/$siteName-Template.xml" -Raw) -replace "USER_PLACEHOLDER", "$targetUser") | Set-Content -Path "$siteName/$siteName-TemplateReplaced.xml"
 
     Invoke-PnPSiteTemplate -Path "$siteName/$siteName-TemplateReplaced.xml"
+    Remove-Item -Path "$siteName/$siteName-TemplateReplaced.xml"
 
     Publish-LiveTilesPages -siteName $siteName
 
@@ -151,11 +152,11 @@ function Update-LiveTilesJsonFiles {
 
     Write-Host "Updating json files ..."
 
-    ((Get-Content -Path "JsonFiles/hub.json" -Raw) -replace "SUBSCRIPTION_PLACEHOLDER", $targetSubscription) | Set-Content -Path "JsonFiles/hubReplaced.json"
-    ((Get-Content -Path "JsonFiles/hubReplaced.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/hubReplaced.json"
-    ((Get-Content -Path "JsonFiles/siteType-Community.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/siteType-CommunityReplaced.json"
-    ((Get-Content -Path "JsonFiles/siteType-Project.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/siteType-ProjectReplaced.json"
-    ((Get-Content -Path "JsonFiles/siteType-Team.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/siteType-TeamReplaced.json"
+    ((Get-Content -Path "JsonFiles/hub.json" -Raw) -replace "SUBSCRIPTION_PLACEHOLDER", $targetSubscription) | Set-Content -Path "JsonFiles/$tenantName-hub.json"
+    ((Get-Content -Path "JsonFiles/$tenantName-hub.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-hub.json"
+    ((Get-Content -Path "JsonFiles/siteType-Community.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Community.json"
+    ((Get-Content -Path "JsonFiles/siteType-Project.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Project.json"
+    ((Get-Content -Path "JsonFiles/siteType-Team.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Team.json"
 
     Write-Host "Done"
 }
