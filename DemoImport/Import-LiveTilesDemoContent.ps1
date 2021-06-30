@@ -1,4 +1,58 @@
-﻿param (
+﻿<#
+.SYNOPSIS
+    Imports demo content and term set for LiveTiles Intranet modules to SharePoint Online"
+
+.DESCRIPTION
+    Requirements:
+    - Powershell v5
+    - PnP.PowerShell, AzureAD
+
+    All modules will be validated and potentially updated when the script runs.
+
+    The script will perform the following actions:
+    - Connect to SharePoint tenant and check site collection exists
+    - Import LiveTiles theme 
+    - Import LiveTiles TermSet Group
+    - Check target site collection exists
+    - Set the LiveTiles theme on the site
+    - Import landing page content and SharePoint events
+    - Import news page content
+    - Import policies page content
+    - Import topics page content
+    - Import demo documents
+    - Site configurations e.g. set default home page
+    - Update LiveTiles Intranet Json configuration files so they are ready for import
+
+    With the -WhatIf switch, only the testing and verification of the above actions will be performed. No CREATE actions are actually performed.
+
+.PARAMETER tenantName
+    The tenant name to be updated.
+
+.PARAMETER importUrl
+    The relative url to the site collection e.g. /sites/intranet
+
+.PARAMETER targetUser
+    The username of a valid user on the target tenant.
+
+.PARAMETER targetReachSubscription
+    (Optional) The reach subscription id for the target environment. If provided, this Id will be inserted into the relevant configuration files.
+
+.EXAMPLE
+    .\Import-LiveTilesDemoContent -tenantName "TryLiveTilesXX" -importUrl "/sites/intranet" -targetUser "admin@TryLiveTilesXX.onmicrosoft.com" -targetReachSubscription "c9d53069-5baa-4ae8-b87c-d0fa325dcf3e"
+    
+    Imports demo content on the specified tenant and site collection. After the script has been completed, the Json configuration files must up added to the LiveTiles intranet configuration manually 
+
+.NOTES
+    AUTHOR: Garry Sinclair
+    LASTEDIT: 30-06-2021 
+    v1.0
+        First Release. Identified 2Do´s:
+            - Automatically upload the LiveTiles Json configuration. Requires generation of access token.
+
+.LINK
+    Updated versions of this script will be available on the LiveTiles Partner Portal
+#>
+param (
     [Parameter(Mandatory=$true)]
     [string]$tenantName,
     [Parameter(Mandatory=$true)]
