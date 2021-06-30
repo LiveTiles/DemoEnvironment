@@ -100,6 +100,7 @@ function Import-LiveTilesTermGroup {
     ((Get-Content -Path "Terms/Terms.xml" -Raw) -replace "USER_PLACEHOLDER", $targetUser) | Set-Content -Path "Terms/TermsReplaced.xml"
     
     Import-PnPTermGroupFromXml -Path "Terms/TermsReplaced.xml"
+    Remove-Item -Path "Terms/TermsReplaced.xml"
     Write-Host "Done"
 }
 
@@ -206,11 +207,14 @@ function Update-LiveTilesJsonFiles {
 
     Write-Host "Updating json files ..."
 
-    ((Get-Content -Path "JsonFiles/hub.json" -Raw) -replace "SUBSCRIPTION_PLACEHOLDER", $targetSubscription) | Set-Content -Path "JsonFiles/$tenantName-hub.json"
+    ((Get-Content -Path "JsonFiles/original-hub.json" -Raw) -replace "SUBSCRIPTION_PLACEHOLDER", $targetSubscription) | Set-Content -Path "JsonFiles/$tenantName-hub.json"
     ((Get-Content -Path "JsonFiles/$tenantName-hub.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-hub.json"
-    ((Get-Content -Path "JsonFiles/siteType-Community.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Community.json"
-    ((Get-Content -Path "JsonFiles/siteType-Project.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Project.json"
-    ((Get-Content -Path "JsonFiles/siteType-Team.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Team.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Community.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Community.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Project.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Project.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Team.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Team.json"
+    (Get-Content -Path "JsonFiles/original-metadata-Department.json" -Raw) | Set-Content -Path "JsonFiles/$tenantName-metadata-Department.json"
+    (Get-Content -Path "JsonFiles/original-metadata-Project.json" -Raw) | Set-Content -Path "JsonFiles/$tenantName-metadata-Project.json"
+    (Get-Content -Path "JsonFiles/original-metadata-Team.json" -Raw) | Set-Content -Path "JsonFiles/$tenantName-metadata-Team.json"
 
     Write-Host "Done"
 }

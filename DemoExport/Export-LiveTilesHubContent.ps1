@@ -112,23 +112,23 @@ function Update-LiveTilesJsonFiles {
     )
 
     Write-Host "Updating hub.json - Replacing source subscription placeholder ..."
-    ((Get-Content -Path "JsonFiles/hub.json" -Raw) -replace $sourceSubscription, "SUBSCRIPTION_PLACEHOLDER") | Set-Content -Path "JsonFiles/hub.json"
+    ((Get-Content -Path "JsonFiles/original-hub.json" -Raw) -replace $sourceSubscription, "SUBSCRIPTION_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-hub.json"
     Write-Host "Done ..."
 
     Write-Host "Updating hub.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/hub.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/hub.json"
+    ((Get-Content -Path "JsonFiles/original-hub.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-hub.json"
     Write-Host "Done ..."
 
     Write-Host "Updating siteType-Community.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/siteType-Community.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/siteType-Community.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Community.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-siteType-Community.json"
     Write-Host "Done ..."
 
     Write-Host "Updating siteType-Project.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/siteType-Project.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/siteType-Project.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Project.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-siteType-Project.json"
     Write-Host "Done ..."
 
     Write-Host "Updating siteType-Team.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/siteType-Team.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/siteType-Team.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Team.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-siteType-Team.json"
     Write-Host "Done ..."
 }
 
