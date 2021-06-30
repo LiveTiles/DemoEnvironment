@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
   <pnp:Preferences Generator="PnP.Framework, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null" />
-  <pnp:Templates ID="CONTAINER-TEMPLATE-67C285694DAA4007AA1C8A6D299DC0DF">
-    <pnp:ProvisioningTemplate ID="TEMPLATE-67C285694DAA4007AA1C8A6D299DC0DF" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
+  <pnp:Templates ID="CONTAINER-TEMPLATE-39AF62677ADE4C259D2F95030E8F28E1">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-39AF62677ADE4C259D2F95030E8F28E1" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
       <pnp:WebSettings NoCrawl="false" WelcomePage="SitePages/Home.aspx" CommentsOnSitePagesDisabled="false" QuickLaunchEnabled="false" SearchScope="DefaultScope" SearchBoxInNavBar="Inherit" />
       <pnp:ClientSidePages>
         <pnp:ClientSidePage PromoteAsNewsArticle="false" PromoteAsTemplate="false" Overwrite="true" Layout="Home" EnableComments="false" Title="Homepage" ThumbnailUrl="" PageName="Home.aspx">

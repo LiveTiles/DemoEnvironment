@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
   <pnp:Preferences Generator="PnP.Framework, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null" />
-  <pnp:Templates ID="CONTAINER-TEMPLATE-8244CC8F0E234221B583EFE09419975E">
-    <pnp:ProvisioningTemplate ID="TEMPLATE-8244CC8F0E234221B583EFE09419975E" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
+  <pnp:Templates ID="CONTAINER-TEMPLATE-641A7D80012C4077A7619003B443DD38">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-641A7D80012C4077A7619003B443DD38" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
       <pnp:ClientSidePages>
         <pnp:ClientSidePage PromoteAsNewsArticle="true" PromoteAsTemplate="false" Overwrite="true" Title="Traverse your digital workplace" ThumbnailUrl="" PageName="Traverse-your-digital-workplace.aspx">
           <pnp:Header Type="Custom" ServerRelativeImageUrl="https://cdn.hubblecontent.osi.office.net/m365content/publish/40a79bdc-d5a1-4e60-abc8-8c1a705c3743/gettyimages-1221754481.jpg" LayoutType="CutInShape" ShowTopicHeader="false" ShowPublishDate="false" TopicHeader="" AlternativeText="" Authors="[{&quot;id&quot;:&quot;i:0#.f|membership|USER_PLACEHOLDER&quot;,&quot;upn&quot;:&quot;USER_PLACEHOLDER&quot;,&quot;email&quot;:&quot;USER_PLACEHOLDER&quot;,&quot;name&quot;:&quot;John Smith&quot;,&quot;role&quot;:&quot;&quot;}]" AuthorByLine="[&quot;i:0#.f|membership|USER_PLACEHOLDER&quot;]" AuthorByLineId="7" />

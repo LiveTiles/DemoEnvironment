@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
   <pnp:Preferences Generator="PnP.Framework, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null" />
-  <pnp:Templates ID="CONTAINER-TEMPLATE-5386DF4F93EE4040875787D6E8DDC7CF">
-    <pnp:ProvisioningTemplate ID="TEMPLATE-5386DF4F93EE4040875787D6E8DDC7CF" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
+  <pnp:Templates ID="CONTAINER-TEMPLATE-B0C7E4B704C84FC78D94F33B8E076DD1">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-B0C7E4B704C84FC78D94F33B8E076DD1" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
       <pnp:ClientSidePages>
         <pnp:ClientSidePage PromoteAsNewsArticle="false" PromoteAsTemplate="false" Overwrite="true" Title="Sustainability" ThumbnailUrl="" PageName="Sustainability.aspx">
           <pnp:Header Type="Custom" ServerRelativeImageUrl="https://cdn.hubblecontent.osi.office.net/m365content/publish/00c70963-e397-484b-a1e3-94d83ec8ec23/901382928.jpg" LayoutType="CutInShape" TextAlignment="Center" ShowTopicHeader="false" ShowPublishDate="false" TopicHeader="" AlternativeText="" Authors="[{&quot;id&quot;:&quot;i:0#.f|membership|USER_PLACEHOLDER&quot;,&quot;upn&quot;:&quot;USER_PLACEHOLDER&quot;,&quot;email&quot;:&quot;USER_PLACEHOLDER&quot;,&quot;name&quot;:&quot;John Smith&quot;,&quot;role&quot;:&quot;&quot;}]" AuthorByLine="[&quot;i:0#.f|membership|USER_PLACEHOLDER&quot;]" AuthorByLineId="7" />

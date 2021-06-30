@@ -1,4 +1,62 @@
-﻿param (
+﻿<#
+.SYNOPSIS
+    Exports demo content and term set for LiveTiles Intranet modules to SharePoint Online"
+
+.DESCRIPTION
+    Requirements:
+    - Powershell v5
+    - PnP.PowerShell, AzureAD
+
+    All modules will be validated and potentially updated when the script runs.
+
+    The script will perform the following actions:
+    - Exports the landing pages, pnp templates, and SharePoint based events
+    - Exports the LiveTiles term group (needed for workspaces)
+    - Exports the pnp provisioning template for MS Teams
+    - Updates the Json files with a placeholder so they can more easily be reused on other tenants
+    - Exports the news pages
+    - Exports the policy pages
+    - Exports the topics pages
+
+    With the -WhatIf switch, only the testing and verification of the above actions will be performed. No CREATE actions are actually performed.
+
+.PARAMETER sourceTenant
+    The source tenant name to be exported.
+
+.PARAMETER sourceUrl
+    The source relative url to the main site collection e.g. /sites/intranet
+
+.PARAMETER usersToReplace
+    A string array of usernames to be replaced with a placeholder for easy import to other environments.
+
+.PARAMETER sourceReachSubscription
+    The reach subscription id for the source environment.
+
+.PARAMETER newsUrl
+    (Optional) The url to the site collection containing news pages for export e.g. /sites/news
+
+.PARAMETER topicsUrl
+    (Optional) The url to the site collection containing topics pages for export e.g. /sites/topics
+
+.PARAMETER policiesUrl
+    (Optional) The url to the site collection containing policy pages for export e.g. /sites/policies
+
+.EXAMPLE
+    .\Export-LiveTilesHubContent -sourceTenant "TryLiveTilesXX" -sourceUrl "/sites/intranet" -usersToReplace "garry.sinclair@trylivetilesxx.onmicrosoft.com","christoffer.soltau@trylivetilesxx.onmicrosoft.com" -sourceReachSubscription "c9d53069-5baa-4ae8-b87c-d0fa325dcf3e" -newsUrl "/sites/news" -topicsUrl "/sites/topics" -policiesUrl "/sites/policies"
+    
+    Exports demo content on the specified tenant and site collections. After the script has been completed, the Json configuration files must up exported manually to the JsonFiles folder 
+
+.NOTES
+    AUTHOR: Garry Sinclair
+    LASTEDIT: 30-06-2021 
+    v1.0
+        First Release. Identified 2Do´s:
+            - Automatically export the LiveTiles Json configuration. Requires generation of access token.
+
+.LINK
+    Updated versions of this script will be available on the LiveTiles Partner Portal
+#>
+param (
     [Parameter(Mandatory=$true)]
     [string]$sourceTenant,
     [Parameter(Mandatory=$true)]
