@@ -29,9 +29,6 @@
 .PARAMETER usersToReplace
     A string array of usernames to be replaced with a placeholder for easy import to other environments.
 
-.PARAMETER sourceReachSubscription
-    The reach subscription id for the source environment.
-
 .PARAMETER newsUrl
     (Optional) The url to the site collection containing news pages for export e.g. /sites/news
 
@@ -63,8 +60,6 @@ param (
     [string]$sourceUrl,
     [Parameter(Mandatory=$true)]
     [string[]]$usersToReplace,
-    [Parameter(Mandatory=$true)]
-    [string]$sourceReachSubscription,
     [Parameter(Mandatory=$false)]
     [string]$newsUrl,
     [Parameter(Mandatory=$false)]
@@ -160,35 +155,7 @@ function Export-LiveTilesTermGroup {
     }
 }
 
-
-function Update-LiveTilesJsonFiles {
-    param(
-        [Parameter(Mandatory=$true)]
-        [String]$sourceTenant,
-        [Parameter(Mandatory=$true)]
-        [String]$sourceSubscription
-    )
-
-    Write-Host "Updating hub.json - Replacing source subscription placeholder ..."
-    ((Get-Content -Path "JsonFiles/original-hub.json" -Raw) -replace $sourceSubscription, "SUBSCRIPTION_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-hub.json"
-    Write-Host "Done ..."
-
-    Write-Host "Updating hub.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/original-hub.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-hub.json"
-    Write-Host "Done ..."
-
-    Write-Host "Updating siteType-Community.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/original-siteType-Community.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-siteType-Community.json"
-    Write-Host "Done ..."
-
-    Write-Host "Updating siteType-Project.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/original-siteType-Project.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-siteType-Project.json"
-    Write-Host "Done ..."
-
-    Write-Host "Updating siteType-Team.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "JsonFiles/original-siteType-Team.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "JsonFiles/original-siteType-Team.json"
-    Write-Host "Done ..."
-}
+# Execution begins here
 
 $tenantUrl = "https://$sourceTenant.sharepoint.com"
 
@@ -197,7 +164,6 @@ Add-PnPDataRowsToSiteTemplate -Path ".\Intranet\Intranet-Template.xml" -List "Ev
 
 Export-LiveTilesTermGroup -siteUrl "$tenantUrl$sourceUrl" -termGroupId 467cf726-dd98-411b-a88e-2d4965fbe3b5 -usersToReplace $usersToReplace
 Get-PnPFile -Url "$sourceUrl/PnPTemplates/Team.tenant.xml"  -Path ".\Intranet" -FileName "Team.tenant.xml" -AsFile -Force
-Update-LiveTilesJsonFiles -sourceTenant $sourceTenant -sourceSubscription $sourceReachSubscription
 
 if($newsUrl -ne $null){
     Export-LiveTilesSite -siteUrl "$tenantUrl$newsUrl" -siteName "News" -usersToReplace $usersToReplace

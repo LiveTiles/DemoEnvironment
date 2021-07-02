@@ -150,7 +150,7 @@
           "title": "Editors Dashboard",
           "value": {
             "icon": {
-              "icon": "ms-Icon ms-Icon--Add",
+              "icon": "ms-Icon ms-Icon--EditMirrored",
               "color": "",
               "backgroundColor": ""
             },
@@ -3521,6 +3521,20 @@
                 "i": "offices",
                 "h": 5,
                 "w": 1
+              },
+              {
+                "x": 0,
+                "y": 36,
+                "i": "g02iwm3jchm",
+                "h": 5,
+                "w": 1
+              },
+              {
+                "x": 0,
+                "y": 37,
+                "i": "gleoay1bctd",
+                "h": 5,
+                "w": 1
               }
             ],
             "2": [
@@ -3579,6 +3593,20 @@
                 "x": 1,
                 "y": 25,
                 "i": "slider"
+              },
+              {
+                "x": 0,
+                "y": 26,
+                "i": "g02iwm3jchm",
+                "h": 5,
+                "w": 1
+              },
+              {
+                "x": 1,
+                "y": 26,
+                "i": "gleoay1bctd",
+                "h": 10,
+                "w": 1
               }
             ],
             "3": [
@@ -3637,6 +3665,20 @@
                 "x": 2,
                 "y": 20,
                 "i": "weather"
+              },
+              {
+                "x": 0,
+                "y": 21,
+                "i": "g02iwm3jchm",
+                "h": 5,
+                "w": 1
+              },
+              {
+                "x": 1,
+                "y": 21,
+                "i": "gleoay1bctd",
+                "h": 10,
+                "w": 1
               }
             ],
             "4": [
@@ -3695,6 +3737,20 @@
                 "x": 0,
                 "y": 15,
                 "i": "weather"
+              },
+              {
+                "w": 1,
+                "h": 5,
+                "x": 0,
+                "y": 20,
+                "i": "g02iwm3jchm"
+              },
+              {
+                "w": 1,
+                "h": 5,
+                "x": 1,
+                "y": 20,
+                "i": "gleoay1bctd"
               }
             ]
           },
@@ -4458,6 +4514,31 @@
                 }
               ],
               "configTypeKey": "widget_tabs"
+            },
+            "g02iwm3jchm": {
+              "globalUniqueKey": "3068ebca-ac3c-c76b-4b9c-7ded13a05f2a",
+              "direction": "horizontal",
+              "configTypeKey": "widget_user",
+              "defaultConfig": {
+                "configTypeKey": "webPart_gridLayout",
+                "areas": {
+                  "1": [],
+                  "2": [],
+                  "3": [],
+                  "4": []
+                },
+                "webParts": {}
+              }
+            },
+            "gleoay1bctd": {
+              "title": "CYCL on Twitter",
+              "tabs": [
+                {
+                  "configTypeKey": "widgetTab_twitter",
+                  "handle": "cyclag"
+                }
+              ],
+              "configTypeKey": "widget_tabs"
             }
           }
         },
@@ -4650,11 +4731,6 @@
         }
       }
     }
-  },
-  "appInfo": {
-    "version": "6.14.0",
-    "buildNumber": "20210510.2-Prod",
-    "gitCommit": "b4242f4c57e8d4d403c90d7a2164b38c38a7f501"
   },
   "iconUrl": "https://hub-cdn.matchpoint365.com/uio365core-v6/static/images/CYCL_Favicon.png",
   "feedbackButton": {
@@ -4903,6 +4979,4 @@
     }
   ]
 }
-
-
 

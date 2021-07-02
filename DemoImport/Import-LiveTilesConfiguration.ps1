@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    Exports demo configuration and for LiveTiles Intranet"
+    Imports demo configuration and for LiveTiles Intranet"
 
 .DESCRIPTION
     Requirements:
@@ -20,17 +20,17 @@
 .PARAMETER siteUrl
     The site relative url to the main site collection e.g. /sites/intranet
 
-.PARAMETER sourceReachSubscription
-    The reach subscription id for the source environment.
-
 .PARAMETER SharePointTenantAdmin
     An intranet admin user. Needed for generating the access token.
 
 .PARAMETER SharePointTenantAdminPassword
     Password for the SharePointTenantAdmin.
 
+.PARAMETER targetReachSubscription
+    (Optional) The reach subscription id for the target environment. If provided, this Id will be inserted into the relevant configuration files.
+
 .EXAMPLE
-    .\Export-LiveTilesConfiguration -tenantName "TryLiveTilesXX" -siteUrl "/sites/intranet" -SharePointTenantAdmin "admin@trylivetilesxx.onmicrosoft.com" -SharePointTenantAdminPassword "P@ssw0rd" 
+    .\Import-LiveTilesConfiguration -tenantName "TryLiveTilesXX" -siteUrl "/sites/intranet" -SharePointTenantAdmin "admin@trylivetilesxx.onmicrosoft.com" -SharePointTenantAdminPassword "P@ssw0rd" -targetReachSubscription "fe3f9bf2-bf77-4c9b-b02f-c39b5ddc66fe"
     
     Exports demo configuration for the specified tenant.  
 
@@ -50,12 +50,13 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$siteUrl,
     [Parameter(Mandatory=$true)]
-    [string]$sourceReachSubscription,
-    [Parameter(Mandatory=$true)]
     [string]$SharePointTenantAdmin,
     [Parameter(Mandatory=$true)]
-    [string]$SharePointTenantAdminPassword
+    [string]$SharePointTenantAdminPassword,
+    [Parameter(Mandatory=$false)]
+    [string]$targetReachSubscription = "SUBSCRIPTION_PLACEHOLDER"
 )
+
 
 function Get-LiveTilesIntranetConfig {
     Param(
@@ -66,9 +67,6 @@ function Get-LiveTilesIntranetConfig {
         [Parameter(Mandatory=$true)]
         [string]$siteUrl
     )
-
-    Write-Host "Exporting LiveTiles INtranet Congig..."
-
     $header = @{
         'accept-encoding' = 'gzip, deflate, br'
         'accept' = '*/*'
@@ -90,13 +88,10 @@ function Get-LiveTilesIntranetConfig {
 
     $url = "https://hub.matchpoint365.com/api/configs/default_hub"
     $result = Invoke-RestMethod –Uri $url -Method Get -Headers $header
-
-    Write-Host "Done ..."
-
     return $result
 }
 
-function Get-LiveTilesMetadataConfig {
+function Set-LiveTilesIntranetConfig {
     Param(
         [Parameter(Mandatory=$true)]
         [string]$accessToken,
@@ -105,14 +100,40 @@ function Get-LiveTilesMetadataConfig {
         [Parameter(Mandatory=$true)]
         [string]$siteUrl
     )
+    
+    Write-Host "Updating LiveTiles intranet config ..."
+
+    # Static variables
+    $url = "https://hub.matchpoint365.com/api/configs/default_hub"
+
+    # Get the existing config data
+    $jsonConfig = Get-LiveTilesIntranetConfig -accessToken $accessToken -tenantName $tenantName -siteUrl $siteUrl
+
+    # Use this to get the new config
+    $newConfig = Get-Content -Path .\JsonFiles\$tenantName-hub.json | ConvertFrom-Json
+        
+    # Merge the new config into a new object
+    $bodyObj = @{
+        'key' = $jsonConfig.key
+        'changeToken' = $jsonConfig.changeToken
+        'appVersion' = $jsonConfig.appVersion
+        'json' = $newConfig
+    }
+    
+    # Convery the body to json
+    $body = $bodyObj | ConvertTo-Json -Depth 100 -Compress
+
+    # Set the header, including the body length    
     $header = @{
-        'accept-encoding' = 'gzip, deflate, br'
         'accept' = '*/*'
+        'accept-encoding' = 'gzip, deflate, br'
         'accept-language' = 'en-US,en;q=0.9'
         'Authorization' = 'Bearer ' + $accessToken
         'cache-control' = 'no-cache'
         'client-url' = 'https://$($tenantName).sharepoint.com$($siteUrl)'
-        'Host' = 'metadata.matchpoint365.com'
+        'Content-Length' = $body.Length
+        'content-type' = 'application/json'
+        'Host' = 'hub.matchpoint365.com'
         'origin' = 'https://$($tenantName).sharepoint.com'
         'pragma' = 'no-cache'
         'referer' = 'https://$($tenantName).sharepoint.com/'
@@ -124,9 +145,10 @@ function Get-LiveTilesMetadataConfig {
         'user-agent' = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
     }
 
-    $url = "https://metadata.matchpoint365.com/api/configs"
-    $result = Invoke-RestMethod –Uri $url -Method Get -Headers $header
-    return $result
+    # Post the config to hub
+    $result = Invoke-RestMethod –Uri $url -Method Post -Headers $header -Body $body
+
+    Write-Host "Done"
 }
 
 function Get-LiveTilesHubToken {
@@ -142,44 +164,34 @@ function Get-LiveTilesHubToken {
     return $AADapiToken
 }
 
+
 function Update-LiveTilesJsonFiles {
     param(
         [Parameter(Mandatory=$true)]
-        [String]$sourceTenant,
+        [String]$tenantName,
         [Parameter(Mandatory=$true)]
-        [String]$sourceSubscription
+        [String]$targetSubscription
     )
 
-    Write-Host "Updating hub.json - Replacing source subscription placeholder ..."
-    ((Get-Content -Path "../DemoImport/JsonFiles/original-hub.json" -Raw) -replace $sourceSubscription, "SUBSCRIPTION_PLACEHOLDER") | Set-Content -Path "../DemoImport/JsonFiles/original-hub.json"
-    Write-Host "Done ..."
+    Write-Host "Updating json files ..."
 
-    Write-Host "Updating hub.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "../DemoImport/JsonFiles/original-hub.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "../DemoImport/JsonFiles/original-hub.json"
-    Write-Host "Done ..."
+    ((Get-Content -Path "JsonFiles/original-hub.json" -Raw) -replace "SUBSCRIPTION_PLACEHOLDER", $targetSubscription) | Set-Content -Path "JsonFiles/$tenantName-hub.json"
+    ((Get-Content -Path "JsonFiles/$tenantName-hub.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-hub.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Community.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Community.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Project.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Project.json"
+    ((Get-Content -Path "JsonFiles/original-siteType-Team.json" -Raw) -replace "TENANT_PLACEHOLDER", "$tenantName") | Set-Content -Path "JsonFiles/$tenantName-siteType-Team.json"
+    (Get-Content -Path "JsonFiles/original-metadata-Department.json" -Raw) | Set-Content -Path "JsonFiles/$tenantName-metadata-Department.json"
+    (Get-Content -Path "JsonFiles/original-metadata-Project.json" -Raw) | Set-Content -Path "JsonFiles/$tenantName-metadata-Project.json"
+    (Get-Content -Path "JsonFiles/original-metadata-Team.json" -Raw) | Set-Content -Path "JsonFiles/$tenantName-metadata-Team.json"
 
-    Write-Host "Updating siteType-Community.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "../DemoImport/JsonFiles/original-siteType-Community.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "../DemoImport/JsonFiles/original-siteType-Community.json"
-    Write-Host "Done ..."
-
-    Write-Host "Updating siteType-Project.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "../DemoImport/JsonFiles/original-siteType-Project.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "../DemoImport/JsonFiles/original-siteType-Project.json"
-    Write-Host "Done ..."
-
-    Write-Host "Updating siteType-Team.json - Replacing $sourceTenant with placeholder ..."
-    ((Get-Content -Path "../DemoImport/JsonFiles/original-siteType-Team.json" -Raw) -replace "$sourceTenant", "TENANT_PLACEHOLDER") | Set-Content -Path "../DemoImport/JsonFiles/original-siteType-Team.json"
-    Write-Host "Done ..."
+    Write-Host "Done"
 }
-
 
 # Execution begins here
 
+Update-LiveTilesJsonFiles -tenantName $tenantName -targetSubscription $targetReachSubscription
 
-$accessToken = Get-LiveTilesHubToken -SharePointTenantAdmin $SharePointTenantAdmin -SharePointTenantAdminPassword $SharePointTenantAdminPassword
-$jsonConfig = Get-LiveTilesIntranetConfig -accessToken $accessToken -tenantName $tenantName -siteUrl $siteUrl
+# Get access token for updating LiveTiles config
+$accessToken = Get-LiveTilesHubToken -SharePointTenantAdmin $targetUser -SharePointTenantAdminPassword $targetUserPassword
 
-# Use this to store the config as a file
-$jsonConfig.json | ConvertTo-Json -Depth 100 | Set-Content -Path "..\DemoImport\JsonFiles\original-hub.json"
-
-# Replace source tenant name with place holder
-Update-LiveTilesJsonFiles -sourceTenant $tenantName -sourceSubscription $sourceReachSubscription
+Set-LiveTilesIntranetConfig -accessToken $accessToken -tenantName $tenantName -siteUrl $siteUrl
