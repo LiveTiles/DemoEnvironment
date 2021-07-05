@@ -7,9 +7,12 @@ Instructions for use
     a. Tenant name
     b. Username and password with SharePoint Administrator permissions
     c. Ensure the above user is also a Term Store Administrator as a new term set group is required. 
-4. Clone this repository or download the files as a ZIP
-5. Run the DemoInstall script - Install-LiveTilesHub.ps1. Use get-help to see usage information. This will install the LiveTiles Intranet components.
-6. Run the DemoImport script - Import-LiveTilesDemoContent.ps1. Use get-help to see usage information. This will import demo SharePoint pages, events, and create a term store group needed for the Workspaces module.
+3. Clone this repository or download the files as a ZIP
+4. Run the DemoInstall script - Install-LiveTilesHub.ps1. Use get-help to see usage information. This will install the LiveTiles Intranet components.
+5. Run the DemoImport - Content script - Import-LiveTilesDemoContent.ps1. Use get-help to see usage information. This will import demo SharePoint pages, events, and create a term store group needed for the Workspaces module.
+6. Run the DemoImport - Configuration script - Import-LiveTilesConfiguration.ps1. Use get-help to see usage information. This will import demo configuration for LiveTiles Intranet.
+7. Manually import LiveTiles Workspaces configuration. From the JsonFiles folder, use the files [TENANT_NAME]-siteType-Community.json, [TENANT_NAME]-siteType-Project.json, and [TENANT_NAME]-siteType-Team.json to provision 3 new site types Community, Project, and Team.
+8. Manually import LiveTiles Metadata configuration. From the JsonFiles folder, use the files [TENANT_NAME]-metadata-Department.json, [TENANT_NAME]-metadata-Project.json, and [TENANT_NAME]-metadata-Team.json to provision 3 new metadata configurations for Department, Project, and Team.
 
 On completion, you will see a homepage similar to the following:
 
