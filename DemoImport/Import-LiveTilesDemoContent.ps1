@@ -199,7 +199,7 @@ $tenantUrl = "https://$tenantName.sharepoint.com"
 Connect-PnPOnline -Url $tenantUrl -Interactive
 
 Import-LiveTilesTheme
-Import-LiveTilesTermGroup -targetUser $targetUser 
+Import-LiveTilesTermGroup -targetUser $targetUser
 
 
 $importUrl = "$tenantUrl$importUrl"

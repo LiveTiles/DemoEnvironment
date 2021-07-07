@@ -67,7 +67,7 @@ function Get-LiveTilesIntranetConfig {
         [string]$siteUrl
     )
 
-    Write-Host "Exporting LiveTiles INtranet Congig..."
+    Write-Host "Exporting LiveTiles Intranet Config..."
 
     $header = @{
         'accept-encoding' = 'gzip, deflate, br'
@@ -179,7 +179,7 @@ $accessToken = Get-LiveTilesHubToken -SharePointTenantAdmin $SharePointTenantAdm
 $jsonConfig = Get-LiveTilesIntranetConfig -accessToken $accessToken -tenantName $tenantName -siteUrl $siteUrl
 
 # Use this to store the config as a file
-$jsonConfig.json | ConvertTo-Json -Depth 100 | Set-Content -Path "..\DemoImport\JsonFiles\original-hub.json"
+$jsonConfig.json | ConvertTo-Json -Depth 100 |  Set-Content -Path "..\DemoImport\JsonFiles\original-hub.json"
 
 # Replace source tenant name with place holder
 Update-LiveTilesJsonFiles -sourceTenant $tenantName -sourceSubscription $sourceReachSubscription

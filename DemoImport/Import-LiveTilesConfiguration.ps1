@@ -187,11 +187,15 @@ function Update-LiveTilesJsonFiles {
     Write-Host "Done"
 }
 
+
+
+#$pnpSharePointAdminContext = Connect-PnPOnline -ReturnConnection -Url $SharePointAdminUrl -Credentials $credentialsOffice365Admin
+
 # Execution begins here
 
 Update-LiveTilesJsonFiles -tenantName $tenantName -targetSubscription $targetReachSubscription
 
 # Get access token for updating LiveTiles config
-$accessToken = Get-LiveTilesHubToken -SharePointTenantAdmin $targetUser -SharePointTenantAdminPassword $targetUserPassword
+$accessToken = Get-LiveTilesHubToken -SharePointTenantAdmin $targetUser -SharePointTenantAdminPassword $SharePointTenantAdminPassword
 
 Set-LiveTilesIntranetConfig -accessToken $accessToken -tenantName $tenantName -siteUrl $siteUrl
