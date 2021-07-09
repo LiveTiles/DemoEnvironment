@@ -86,9 +86,14 @@
     UnInstalls Hub and all modules using the John Doe credentials. Will prompt for password. 
 
 .EXAMPLE
-    .\Install-LiveTilesHub -SharePointTenantAdmin john.doe@fabricam.com -noReach
+    .\Install-LiveTilesHub -SharePointTenantAdmin john.doe@fabricam.com -Reach NoInstall
     
     Installs Hub and all modules on the root site collection using the John Doe credentials. Will prompt for password. Reach will not be installed
+
+.EXAMPLE
+    .\Install-LiveTilesHub -SharePointTenantAdmin john.doe@fabricam.com -Reach BroadcastLtd
+    
+    Installs Hub and all modules on the root site collection using the John Doe credentials. Will prompt for password. Reach will be provisioned with the "Broadcast Ltd" demo set
 
 .NOTES
     AUTHOR: Christoffer Soltau
@@ -99,6 +104,8 @@
 	        - After search config import, Better error message - perhaps a description of what needs to be done manually?
                 - Can't see that there's a reason it would fail with current settings - no changes made to custom managed properties where it usually fails.
 	        - Creation of Governance license creation. Untested runtime - may have to be placed before subscription link??
+            - Check if user is app cat admin - otherwise we can't upload packages
+            - Check if user is site coll admin - otherwise we can't add apps.
 
 .LINK
     Updated versions of this script will be available on the LiveTiles Partner Portal
@@ -292,6 +299,23 @@ Function Grant-OAuth2PermissionsToApp () #Mimics "Grant Permissions" button when
             Start-Sleep -Seconds 10}
     } until ($completed)
 }
+
+Function Get-PortalAPIAccessToken {
+    #piggybacks on connect-azuread to get user login and dll
+    param(
+        [string]$ClientId,
+        [string]$RedirectUri = "urn:ietf:wg:oauth:2.0:oob",
+        [string]$TenantId,
+        [string]$Resource
+    )
+    $authority = "https://login.microsoftonline.com/$($TenantId)"
+    $authContext = New-Object "Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext" -ArgumentList $authority, $false
+    $PromptBehavior = [Microsoft.IdentityModel.Clients.ActiveDirectory.PromptBehavior]::RefreshSession
+    $PlatformParameters = New-Object Microsoft.IdentityModel.Clients.ActiveDirectory.PlatformParameters -ArgumentList $PromptBehavior
+    $authResult = $authContext.AcquireTokenAsync($Resource, $ClientId, $redirectUri, $PlatformParameters).Result
+    $token = $authResult.AccessToken
+    return $token;
+}
 #endregion
 
 $dateStart = get-date
@@ -351,7 +375,7 @@ Write-Host ("Installation starttime: " + $dateStart) -ForegroundColor White
     #if (-not $skipCheckPrerequisites.IsPresent) {
         $output = Write-LiveTilesHost -messageType PROCESS -message ("Checking Powershell Module prerequisites")
         $dotCount = 0
-        $moduleList = @(("PnP.PowerShell", "1.6.0"), ("AzureAD", "2.0.2.135"), ("Microsoft.Online.SharePoint.Powershell", "16.0.21213.12000")) #, ("Az.Accounts","2.3.0"), ("AzureRM.profile","5.8.4"))
+        $moduleList = @(("PnP.PowerShell", "1.6.0"), ("AzureAD", "2.0.2.135"), ("Microsoft.Online.SharePoint.Powershell", "16.0.21213.12000"))#, ("PowerShellGet","2.2.5"), ("MSAL.PS", "4.21.0.1")) #, ("Az.Accounts","2.3.0"), ("AzureRM.profile","5.8.4"))
         $availableModules = Get-Module
         foreach ($module in $moduleList) {
             if (($output + $dotCount) -le ($outputMaxLength - 2)) {
@@ -400,11 +424,11 @@ Write-Host ("Installation starttime: " + $dateStart) -ForegroundColor White
 #   }
 #endregion
 
-#region Logging in to SharePoint Admin
+#region Logging in to SharePoint Admin via PnP
 
     try {
-        if (-not $useWebLoginSharePoint.IsPresent) {
-            $output = Write-LiveTilesHost -messageType PROCESS -message ("Logging in to SharePoint Admin as " + $SharePointTenantAdmin)
+        if (-not $UseWebLogin.IsPresent) {
+            $output = Write-LiveTilesHost -messageType PROCESS -message ("Logging in to SharePoint Admin using PnP as " + $SharePointTenantAdmin)
                 
                 if ($SharePointTenantAdminPassword -eq "") {
                     Write-Host
@@ -430,14 +454,21 @@ Write-Host ("Installation starttime: " + $dateStart) -ForegroundColor White
         }
     } catch {
         Write-LiveTilesHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "Cannot login. Insufficient rights? Exiting script"
-        Exit
+        Write-Host "Hints:"
+        Write-Host "- Insufficient rights?"
+        Write-Host "  - User needs to be assigned SharePoint Administrator Role (or global admin...) to add packages and setup sharepoint"
+        Write-Host "  - User needs to be assigned Application Administrator Role (or Global Admin...) to add Service Principals (connect to LiveTiles Services)"
+        Write-Host "  - User needs to be assigned Priveleged Role Administrator Role (or Global Admin...) to be able to grant consent to Service Principal Permission requests on behalf of all users"
+        Write-Host "- MFA Enabled?"
+        Write-Host "  - Use the -UseWeblogin parameter)."Exit
     }
+    $tenantId = Get-PnPTenantId
 
 #endregion
 
 #region SPO Online module
      try {
-        if (-not $useWebLoginSharePoint.IsPresent) {
+        if (-not $UseWebLogin.IsPresent) {
             $output = Write-LiveTilesHost -messageType PROCESS -message ("Logging in to SharePoint Online Module as " + $SharePointTenantAdmin)
                 Connect-SPOService -Url $SharePointAdminUrl -Credential $credentialsOffice365Admin
             Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
@@ -447,17 +478,52 @@ Write-Host ("Installation starttime: " + $dateStart) -ForegroundColor White
             Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
         }
     } catch {
-        Write-LiveTilesHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "Cannot login. Insufficient rights? Exiting script"
+        Write-LiveTilesHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "Cannot login. Exiting script"
+        Write-Host "Hints:"
+        Write-Host "- Insufficient rights?"
+        Write-Host "  - User needs to be assigned SharePoint Administrator Role (or global admin...) to add packages and setup sharepoint"
+        Write-Host "  - User needs to be assigned Application Administrator Role (or Global Admin...) to add Service Principals (connect to LiveTiles Services)"
+        Write-Host "  - User needs to be assigned Priveleged Role Administrator Role (or Global Admin...) to be able to grant consent to Service Principal Permission requests on behalf of all users"
+        Write-Host "- MFA Enabled?"
+        Write-Host "  - Use the -UseWeblogin parameter)."
         Exit
     }
 
 #endregion
 
+#region azuread module
+    try {
+        if (-not $UseWebLogin.IsPresent) {
+            $output = Write-LiveTilesHost -messageType PROCESS -message ("Logging in to AzureAD Module as " + $SharePointTenantAdmin)
+            $AADcontext = Connect-AzureAD -Credential $credentialsOffice365Admin
+            Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+        } else {
+            $output = Write-LiveTilesHost -messageType PROCESSATTENTION -message "AzureAD-Module: Sign in to AzureAD with Application Administrator rights"
+            $AADcontext = Connect-AzureAD
+            Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+            
+        }  
+    } catch {
+        Write-LiveTilesHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "Cannot login. Exiting script"
+        Write-Host "Hints:"
+        Write-Host "- Insufficient rights?"
+        Write-Host "  - User needs to be assigned SharePoint Administrator Role (or global admin...) to add packages and setup sharepoint"
+        Write-Host "  - User needs to be assigned Application Administrator Role (or Global Admin...) to add Service Principals (connect to LiveTiles Services)"
+        Write-Host "  - User needs to be assigned Priveleged Role Administrator Role (or Global Admin...) to be able to grant consent to Service Principal Permission requests on behalf of all users"
+        Write-Host "- MFA Enabled?"
+        Write-Host "  - Use the -UseWeblogin parameter)."
+        Exit
+    }
+
+#endregion
 
 #region Get Azure AD internal API token
     $output = Write-LiveTilesHost -messageType PROCESS -message ("Getting Azure AD API Token")
-
-    $AADapiToken = (Invoke-RestMethod "https://login.windows.net/$($pnpSharePointAdminContext.Tenant)/oauth2/token" -Method POST -Body "resource=74658136-14ec-4630-ad9b-26e160ff0fc6&grant_type=password&client_id=1950a258-227b-4e31-a9cf-717495945fc2&scope=openid&username=$($SharePointTenantAdmin)&password=$($SharePointTenantAdminPassword)").access_token
+    if (-not $UseWebLogin.IsPresent) {
+        $AADapiToken = (Invoke-RestMethod "https://login.windows.net/$($tenantId)/oauth2/token" -Method POST -Body "resource=74658136-14ec-4630-ad9b-26e160ff0fc6&grant_type=password&client_id=1950a258-227b-4e31-a9cf-717495945fc2&scope=openid&username=$($SharePointTenantAdmin)&password=$($SharePointTenantAdminPassword)").access_token
+    } else {
+        $AADapiToken = Get-PortalAPIAccessToken -ClientId "1950a258-227b-4e31-a9cf-717495945fc2" -TenantId $tenantId -Resource "74658136-14ec-4630-ad9b-26e160ff0fc6"
+    }
     Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
 #endregion
 
@@ -477,7 +543,7 @@ if (-not $uninstall.IsPresent) {
 
                     $appCatExists = $False
                     do {
-                        if (-not $useWebLoginSharePoint.IsPresent) {
+                        if (-not $useWebLogin.IsPresent) {
                             $pnpSharePointAdminContext = Connect-PnPOnline -ReturnConnection -Url $SharePointAdminUrl -Credentials $credentialsOffice365Admin
                         } else {
                             $output = Write-LiveTilesHost -messageType PROCESSATTENTION -message "PnPOnline-Module: Sign in to Office 365 with SharePoint Admin rights"
@@ -501,27 +567,50 @@ if (-not $uninstall.IsPresent) {
 
     #endregion
     
+    #region check app catalog rights
+        $output = Write-WizdomHost -messageType PROCESS -message "Checking Application Catalog rights" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+            $appCatalogAdmin = $null
+            $appCatalogAdminGroup = $null
+            do {    
+                Start-Sleep -Seconds $waitShort
+                try {
+                    $appCatalogAdmin = Get-SPOUser -site $appCatalogUrl -LoginName $SharePointTenantAdmin
+                    $appCatalogAdminGroup = get-spositegroup -Site $appCatalogUrl
+                } catch {
+                    $appCatalogAdmin = $null
+                    $appCatalogAdminGroup = $null
+                }
+            } while ($null -eq $appCatalogAdmin -and $null -eq $appCatalogAdminGroup)
+            if ((($appCatalogAdmin).where({$_.IsSiteAdmin -eq $true}).count -eq 0) -and (($appCatalogAdminGroup.where{($_.roles -match "Full Control" -or $_.roles -match "Contribute") -and $_.users -match $SharePointTenantAdmin}).count -eq 0)) {
+                Write-WizdomHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "$($SharePointTenantAdmin) doesn't have access to the App Catalog at $($appCatalogUrl) as either Owner or Site Collection Owner. Stopping installation script" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+                Exit
+            }
+        Write-WizdomHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+    #endregion
+
     #region enable CDN
     if ($EnableCDN.IsPresent) {
         if (-not (Get-PnPTenantCdnEnabled -Connection $pnpSharePointAdminContext -CdnType Public).value) {
+            $output = Write-LiveTilesHost -messageType PROCESS -message "Enabling CDN for tenant" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
             if ($PSCmdlet.ShouldProcess("TenantCDN ", "Enable")) {
                 Set-PnPTenantCdnEnabled -CdnType Public -Connection $pnpSharePointAdminContext -Enable:$true
             }
+            Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength ($output) -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
         }
 
     }
     #endregion
 
     #region add hubsite collection if not existing
-            $output = Write-LiveTilesHost -messageType PROCESS -message "Checking if Hub SiteCollection exists" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
-            $hubSite = Get-PnPTenantSite -Connection $pnpSharePointAdminContext -Identity $HubSiteCollection -ErrorAction Ignore
-            if ($hubSite -eq "" -or $hubSite -eq $null) {
-                Write-LiveTilesHost -messageType WARNING -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference -afterOutputMessage "The Hub site doesn't exist. Creating $($HubSiteCollection)"
-                $output = 0
-                if ($PSCmdlet.ShouldProcess("HubSite ", "Create")) {
-                    New-PnPSite -Type CommunicationSite -Title Intranet -Url $hubSiteCollection -Connection $pnpSharePointAdminContext -Wait | Write-Verbose
-                }
-            }                
+        $output = Write-LiveTilesHost -messageType PROCESS -message "Checking if Hub SiteCollection exists" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+        $hubSite = Get-PnPTenantSite -Connection $pnpSharePointAdminContext -Identity $HubSiteCollection -ErrorAction Ignore
+        if ($hubSite -eq "" -or $hubSite -eq $null) {
+            Write-LiveTilesHost -messageType WARNING -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference -afterOutputMessage "The Hub site doesn't exist. Creating $($HubSiteCollection)"
+            $output = 0
+            if ($PSCmdlet.ShouldProcess("HubSite ", "Create")) {
+                New-PnPSite -Type CommunicationSite -Title Intranet -Url $hubSiteCollection -Connection $pnpSharePointAdminContext -Wait | Write-Verbose
+            }
+        }                
 
         Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength ($output) -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
     #endregion
@@ -627,7 +716,16 @@ if (-not $uninstall.IsPresent) {
         if ($PSCmdlet.ShouldProcess("ServicePricinpal Creation finalized ", "Wait")) {
             $completed = $false
             do {
-                $AADcontext = Connect-AzureAD -Credential $credentialsOffice365Admin
+                if (-not $UseWebLogin.IsPresent) {
+                    $AADcontext = Connect-AzureAD -Credential $credentialsOffice365Admin
+                } else {
+                    Start-Sleep -Seconds $waitLong
+                    Write-Host
+                    $output = Write-LiveTilesHost -messageType PROCESSATTENTION -message "AzureAD-Module: Sign in to AzureAD with Application Administrator rights"
+                    $AADcontext = Connect-AzureAD
+                    Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+            
+                }                
                 $splist = Get-AzureADServicePrincipal -All $true
                 foreach ($appId in $appIdsLiveTiles) {
                     if ($splist.where({$_.AppId -eq $appId}).count -eq 0) {
@@ -730,7 +828,7 @@ if (-not $uninstall.IsPresent) {
         if ((-not $noWorkspaces.IsPresent) -and (-not $noProvisioning.IsPresent)) {
             $output = Write-LiveTilesHost -messageType PROCESSATTENTION -message "Opening browser to grant Workspaces consent to access Provisioning - please return here afterwards." -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
             sleep -Seconds $waitShort
-            if ($PSCmdlet.ShouldProcess("RWorkspaces -> Provisioning Access", "Consent")) {
+            if ($PSCmdlet.ShouldProcess("Workspaces -> Provisioning Access", "Consent")) {
                 Start-Process "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=a9a0e8f6-2cee-42d2-b00f-c9299e509958&response_type=id_token%20token&scope=https://iurcycl.onmicrosoft.com/matchpoint-provisioning/user_impersonation&redirect_uri=https://workspaces.matchpoint365.com/api/workspaces/register"
             }
             Write-Host
@@ -782,10 +880,12 @@ if (-not $uninstall.IsPresent) {
                 if (-not $useWebLogin.IsPresent) {
                     $output = Write-LiveTilesHost -messageType PROCESS -message ("Logging in to SharePoint Hub Site as " + $SharePointTenantAdmin)
                         $pnpSharePointHubSiteContext = Connect-PnPOnline -ReturnConnection -Url $hubSiteCollection -Credentials $credentialsOffice365Admin
+                        $pnpUserName = $pnpSharePointHubSiteContext.PSCredential.UserName
                     Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
                 } else {
                     $output = Write-LiveTilesHost -messageType PROCESSATTENTION -message "PnPOnline-Module: Sign in to Office 365 with SharePoint Admin rights"
                         $pnpSharePointHubSiteContext = Connect-PnPOnline -ReturnConnection -Url $hubSiteCollection -Interactive
+                        $pnpUserName = (Get-PnPAccessToken -Decoded).payload.upn
                     Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
                 }
             } catch {
@@ -799,8 +899,8 @@ if (-not $uninstall.IsPresent) {
         $output = Write-LiveTilesHost -messageType PROCESS -message ("Adding local apps to Hub SiteCollection " + $pnpSharePointHubSiteContext.Url)
             if ($PSCmdlet.ShouldProcess("SiteCollectionAdmin", "Add")) {
                 $hubSiteAdminList = @((Get-PnPSiteCollectionAdmin -Connection $pnpSharePointHubSiteContext).LoginName)
-                if (("i:0#.f|membership|"+$pnpSharePointHubSiteContext.PSCredential.UserName) -notin $hubSiteAdminList) {
-                    Add-PnPSiteCollectionAdmin -Owners $pnpSharePointHubSiteContext.PSCredential.UserName -Connection $pnpSharePointHubSiteContext
+                if (("i:0#.f|membership|"+$pnpUserName) -notin $hubSiteAdminList) {
+                    Add-PnPSiteCollectionAdmin -Owners $pnpUserName -Connection $pnpSharePointHubSiteContext
                 }
             }
 
@@ -948,9 +1048,30 @@ if (-not $uninstall.IsPresent) {
         Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
     #endregion
 } else { #Uninstall
+    #region check app catalog rights
+        $output = Write-WizdomHost -messageType PROCESS -message "Checking Application Catalog rights" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+            $appCatalogAdmin = $null
+            $appCatalogAdminGroup = $null
+            do {    
+                Start-Sleep -Seconds $waitShort
+                try {
+                    $appCatalogAdmin = Get-SPOUser -site $appCatalogUrl -LoginName $SharePointTenantAdmin
+                    $appCatalogAdminGroup = get-spositegroup -Site $appCatalogUrl
+                } catch {
+                    $appCatalogAdmin = $null
+                    $appCatalogAdminGroup = $null
+                }
+            } while ($null -eq $appCatalogAdmin -and $null -eq $appCatalogAdminGroup)
+            if ((($appCatalogAdmin).where({$_.IsSiteAdmin -eq $true}).count -eq 0) -and (($appCatalogAdminGroup.where{($_.roles -match "Full Control" -or $_.roles -match "Contribute") -and $_.users -match $SharePointTenantAdmin}).count -eq 0)) {
+                Write-WizdomHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "$($SharePointTenantAdmin) doesn't have access to the App Catalog at $($appCatalogUrl) as either Owner or Site Collection Owner. Stopping installation script" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+                Exit
+            }
+        Write-WizdomHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+    #endregion
+    
     #remove frontpage
     try {
-        if (-not $useWebLoginSharePoint.IsPresent) {
+        if (-not $useWebLogin.IsPresent) {
             $output = Write-LiveTilesHost -messageType PROCESS -message ("Logging in to SharePoint Hub Site as " + $SharePointTenantAdmin)
                 $pnpSharePointHubSiteContext = Connect-PnPOnline -ReturnConnection -Url $hubSiteCollection -Credentials $credentialsOffice365Admin
             Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
@@ -1014,8 +1135,18 @@ if (-not $uninstall.IsPresent) {
     Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
 
     #remove service principals
+        if (-not $UseWebLogin.IsPresent) {
+            $AADcontext = Connect-AzureAD -Credential $credentialsOffice365Admin
+        } else {
+            $output = Write-LiveTilesHost -messageType PROCESSATTENTION -message "AzureAD-Module: Sign in to AzureAD with Application Administrator rights"
+            $AADcontext = Connect-AzureAD
+            Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+            
+        }
+
+
+
     $output = Write-LiveTilesHost -messageType PROCESS -message ("Removing Service Principals")
-        $AADcontext = Connect-AzureAD -Credential $credentialsOffice365Admin
         if ($PSCmdlet.ShouldProcess("Azure AD Service Principals", "Remove")) {
             (Get-AzureADServicePrincipal -All $true).where({$_.AppId -in $appIdsLiveTiles}) | Remove-AzureADServicePrincipal
         }
@@ -1028,6 +1159,9 @@ if (-not $uninstall.IsPresent) {
         }
     Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
 }
+
+Disconnect-PnPOnline
+Disconnect-SPOService
 Write-Host ("Installation endtime: " + (get-date)) -ForegroundColor White
 
 
@@ -1038,4 +1172,5 @@ Id token gennem PnP Management shell app
 Invoke-RestMethod "https://login.windows.net/bb9ca92d-d8ac-4810-b19a-753773c9c3bd/oauth2/token" -Method POST -Body "resource=$([System.Web.HttpUtility]::UrlEncode("https://graph.microsoft.com"))&grant_type=password&client_id=31359c7f-bd7e-475c-86db-fdb8c937548e&scope=openid&username=admin@M365x510994.onmicrosoft.com&password=Rd6E0x7e1N"
 
 Invoke-RestMethod "https://login.windows.net/bb9ca92d-d8ac-4810-b19a-753773c9c3bd/oauth2/token" -Method POST -Body "resource=74658136-14ec-4630-ad9b-26e160ff0fc6&grant_type=password&client_id=1950a258-227b-4e31-a9cf-717495945fc2&scope=openid&username=admin@M365x510994.onmicrosoft.com&password=Rd6E0x7e1N"
+
 #>
