@@ -35,7 +35,7 @@
     The username of a valid user on the target tenant.
     
 .EXAMPLE
-    .\Import-LiveTilesDemoContent -tenantName "TryLiveTilesXX" -importUrl "/sites/intranet" -targetUser "admin@TryLiveTilesXX.onmicrosoft.com" -targetReachSubscription "c9d53069-5baa-4ae8-b87c-d0fa325dcf3e"
+    .\Import-LiveTilesDemoContent -tenantName "TryLiveTilesXX" -importUrl "/sites/intranet" -targetUser "admin@TryLiveTilesXX.onmicrosoft.com"
     
     Imports demo content on the specified tenant and site collection. After the script has been completed, the Json configuration files must up added to the LiveTiles intranet configuration manually 
 
@@ -204,14 +204,13 @@ Import-LiveTilesTermGroup -targetUser $targetUser
 
 $importUrl = "$tenantUrl$importUrl"
 
-$site = Get-PnPTenantSite -Identity $importUrl -ErrorAction SilentlyContinue
+Connect-PnPOnline -Url $importUrl -Interactive
+$site = Get-PnPSite -ErrorAction SilentlyContinue
 
 if($site -eq $null) {
     Write-Host "Site $importUrl does not exist. Create before continueing."
     Exit
 }
-
-Connect-PnPOnline -Url $importUrl -Interactive
 
 Set-PnPWebTheme -Theme LiveTiles
 Import-LiveTilesSite -siteName "Intranet" -targetUser $targetUser
