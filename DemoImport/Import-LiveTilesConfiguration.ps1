@@ -196,6 +196,6 @@ function Update-LiveTilesJsonFiles {
 Update-LiveTilesJsonFiles -tenantName $tenantName -targetSubscription $targetReachSubscription
 
 # Get access token for updating LiveTiles config
-$accessToken = Get-LiveTilesHubToken -SharePointTenantAdmin $targetUser -SharePointTenantAdminPassword $SharePointTenantAdminPassword
+$accessToken = Get-LiveTilesHubToken -SharePointTenantAdmin $SharePointTenantAdmin -SharePointTenantAdminPassword $SharePointTenantAdminPassword
 
 Set-LiveTilesIntranetConfig -accessToken $accessToken -tenantName $tenantName -siteUrl $siteUrl
