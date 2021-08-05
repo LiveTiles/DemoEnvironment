@@ -568,7 +568,7 @@ if (-not $uninstall.IsPresent) {
     #endregion
     
     #region check app catalog rights
-        $output = Write-WizdomHost -messageType PROCESS -message "Checking Application Catalog rights" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+        $output = Write-LiveTilesHost -messageType PROCESS -message "Checking Application Catalog rights" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
             $appCatalogAdmin = $null
             $appCatalogAdminGroup = $null
             do {    
@@ -582,10 +582,10 @@ if (-not $uninstall.IsPresent) {
                 }
             } while ($null -eq $appCatalogAdmin -and $null -eq $appCatalogAdminGroup)
             if ((($appCatalogAdmin).where({$_.IsSiteAdmin -eq $true}).count -eq 0) -and (($appCatalogAdminGroup.where{($_.roles -match "Full Control" -or $_.roles -match "Contribute") -and $_.users -match $SharePointTenantAdmin}).count -eq 0)) {
-                Write-WizdomHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "$($SharePointTenantAdmin) doesn't have access to the App Catalog at $($appCatalogUrl) as either Owner or Site Collection Owner. Stopping installation script" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+                Write-LiveTilesHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "$($SharePointTenantAdmin) doesn't have access to the App Catalog at $($appCatalogUrl) as either Owner or Site Collection Owner. Stopping installation script" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
                 Exit
             }
-        Write-WizdomHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+        Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
     #endregion
 
     #region enable CDN
@@ -1049,7 +1049,7 @@ if (-not $uninstall.IsPresent) {
     #endregion
 } else { #Uninstall
     #region check app catalog rights
-        $output = Write-WizdomHost -messageType PROCESS -message "Checking Application Catalog rights" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+        $output = Write-LiveTilesHost -messageType PROCESS -message "Checking Application Catalog rights" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
             $appCatalogAdmin = $null
             $appCatalogAdminGroup = $null
             do {    
@@ -1063,10 +1063,10 @@ if (-not $uninstall.IsPresent) {
                 }
             } while ($null -eq $appCatalogAdmin -and $null -eq $appCatalogAdminGroup)
             if ((($appCatalogAdmin).where({$_.IsSiteAdmin -eq $true}).count -eq 0) -and (($appCatalogAdminGroup.where{($_.roles -match "Full Control" -or $_.roles -match "Contribute") -and $_.users -match $SharePointTenantAdmin}).count -eq 0)) {
-                Write-WizdomHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "$($SharePointTenantAdmin) doesn't have access to the App Catalog at $($appCatalogUrl) as either Owner or Site Collection Owner. Stopping installation script" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+                Write-LiveTilesHost -messageType ERROR -outputMaxLength $outputMaxLength -initialStringLength $output -afterOutputMessage "$($SharePointTenantAdmin) doesn't have access to the App Catalog at $($appCatalogUrl) as either Owner or Site Collection Owner. Stopping installation script" -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
                 Exit
             }
-        Write-WizdomHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
+        Write-LiveTilesHost -messageType OK -outputMaxLength $outputMaxLength -initialStringLength $output -WhatIf:$WhatIfPreference -Verbose:$VerbosePreference
     #endregion
     
     #remove frontpage
