@@ -109,7 +109,7 @@ function Configure-LiveTilesSite {
  
     #Add domain
     $Domain = [Microsoft.SharePoint.Client.ScriptSafeDomainEntityData]::new()
-    $Domain.DomainName = "app.condense.ch"
+    $Domain.DomainName = "reach.livetiles.io"
     $null = $Site.CustomScriptSafeDomains.Create($Domain)
     Invoke-PnPQuery
 
