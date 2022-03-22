@@ -120,11 +120,11 @@ param (
     [Parameter(Mandatory=$false, ParameterSetName = "nonMFA.uninstall")]
     [Parameter(Mandatory=$false, ParameterSetName="nonMFA.partial.install")]
     [Parameter(Mandatory=$false, ParameterSetName="nonMFA.full.install")]
-    [string]$SharePointTenantAdmin = "admin@M365x510994.onmicrosoft.com",
+    [string]$SharePointTenantAdmin,
     [Parameter(Mandatory=$false, ParameterSetName = "nonMFA.uninstall")]
     [Parameter(Mandatory=$false, ParameterSetName="nonMFA.partial.install")]
     [Parameter(Mandatory=$false, ParameterSetName="nonMFA.full.install")]
-    [string]$SharePointTenantAdminPassword = "Rd6E0x7e1N",
+    [string]$SharePointTenantAdminPassword,
     [Parameter(Mandatory=$false)]
     [string]$O365Tenant = "",
     [Parameter(Mandatory=$false)]
